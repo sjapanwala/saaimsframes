@@ -12,11 +12,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream:   #F8F4E1;
-  --sand:    #AF8F6F;
-  --walnut:  #74512D;
-  --bark:    #543310;
-  --ink:     #1a0f00;
+  --bg:       #F7F4EE;
+  --surface:  #EDE8DF;
+  --rule:     #CBC3B5;
+  --muted:    #9A8B7A;
+  --mid:      #5C4A38;
+  --deep:     #3A2618;
+  --ink:      #1A130D;
+
+  /* dark-section palette */
+  --d-bg:     #1A130D;
+  --d-text:   #F7F4EE;
+  --d-muted:  rgba(247,244,238,0.42);
+  --d-rule:   rgba(247,244,238,0.09);
+  --d-accent: rgba(247,244,238,0.65);
+
   --display: 'Playfair Display', Georgia, serif;
   --body:    'EB Garamond', Georgia, serif;
   --caps:    'Oswald', sans-serif;
@@ -24,61 +34,82 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 18px; overflow-x: hidden; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 18px; overflow-x: hidden; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; border: none; background: none; cursor: pointer; }
 img { display: block; object-fit: cover; }
 
-/* ─── MASTHEAD ─────────────────────────────────────── */
+/* ─── TOPBAR ────────────────────────────────────────── */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 910;
+  height: 28px; background: var(--d-bg);
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  padding: 0 3rem;
+}
+.topbar-inner {
+  display: flex; align-items: center; gap: 0; width: 100%;
+  max-width: 1400px; justify-content: space-between;
+}
+.topbar span {
+  font-family: var(--caps); font-weight: 200; font-size: 0.46rem;
+  letter-spacing: 4px; text-transform: uppercase; color: rgba(247,244,238,0.35);
+  white-space: nowrap;
+}
+.topbar span.hi { color: rgba(247,244,238,0.6); }
+.topbar-divider { width: 1px; height: 10px; background: rgba(247,244,238,0.12); margin: 0 2rem; flex-shrink: 0; }
+@media (max-width: 780px) { .topbar { display: none; } }
+
+/* ─── MASTHEAD ──────────────────────────────────────── */
 .masthead {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  background: var(--cream); border-bottom: 1px solid var(--sand);
+  position: fixed; top: 28px; left: 0; right: 0; z-index: 900;
+  background: var(--bg); border-bottom: 1px solid var(--rule);
   display: grid; grid-template-columns: 1fr auto 1fr;
-  align-items: center; padding: 0 2.5rem; height: 52px;
+  align-items: center; padding: 0 3rem; height: 58px;
 }
-.mast-left { display: flex; gap: 2rem; align-items: center; }
+.mast-left { display: flex; gap: 2.5rem; align-items: center; }
 .mast-left a {
-  font-family: var(--caps); font-weight: 300; font-size: 0.62rem;
-  letter-spacing: 3px; text-transform: uppercase; color: var(--walnut); transition: color 0.2s;
+  font-family: var(--caps); font-weight: 300; font-size: 0.58rem;
+  letter-spacing: 3.5px; text-transform: uppercase; color: var(--muted); transition: color 0.2s;
 }
-.mast-left a:hover { color: var(--bark); }
+.mast-left a:hover { color: var(--ink); }
 .mast-center { text-align: center; }
 .mast-title {
   font-family: var(--display); font-weight: 900; font-style: italic;
-  font-size: 1.3rem; letter-spacing: 1px; color: var(--bark); white-space: nowrap; line-height: 1;
+  font-size: 1.3rem; letter-spacing: 0.5px; color: var(--ink); white-space: nowrap; line-height: 1;
 }
 .mast-sub {
-  font-family: var(--caps); font-weight: 200; font-size: 0.45rem;
-  letter-spacing: 5px; text-transform: uppercase; color: var(--sand); margin-top: 1px;
+  font-family: var(--caps); font-weight: 200; font-size: 0.41rem;
+  letter-spacing: 5.5px; text-transform: uppercase; color: var(--muted); margin-top: 3px;
 }
 .mast-right { display: flex; justify-content: flex-end; align-items: center; }
 .mast-commission {
-  font-family: var(--caps); font-weight: 300; font-size: 0.6rem;
+  font-family: var(--caps); font-weight: 300; font-size: 0.57rem;
   letter-spacing: 3px; text-transform: uppercase;
-  color: var(--cream); background: var(--bark); padding: 0.45rem 1.1rem; transition: background 0.2s;
+  color: var(--ink); border: 1px solid var(--rule); padding: 0.48rem 1.2rem;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
 }
-.mast-commission:hover { background: var(--walnut); }
+.mast-commission:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .mast-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-.mast-burger span { display: block; width: 22px; height: 1px; background: var(--bark); transition: transform 0.3s, opacity 0.2s; }
+.mast-burger span { display: block; width: 22px; height: 1px; background: var(--ink); transition: transform 0.3s, opacity 0.2s; }
 .mast-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 .mast-burger.open span:nth-child(2) { opacity: 0; }
 .mast-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 .mobile-nav {
-  position: fixed; inset: 0; top: 52px;
-  background: var(--cream); z-index: 850;
+  position: fixed; inset: 0; top: 58px;
+  background: var(--bg); z-index: 850;
   display: flex; flex-direction: column; justify-content: center;
   padding: 4rem 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .mobile-nav.open { opacity: 1; pointer-events: all; }
 .mobile-nav a {
   font-family: var(--display); font-style: italic; font-size: clamp(2.5rem, 9vw, 4rem);
-  color: var(--bark); line-height: 1.2;
-  border-bottom: 1px solid rgba(84,51,16,0.12); padding: 1rem 0; transition: color 0.2s;
+  color: var(--ink); line-height: 1.2;
+  border-bottom: 1px solid var(--rule); padding: 1rem 0; transition: color 0.2s;
 }
 .mobile-nav a:last-child { border-bottom: none; }
-.mobile-nav a:hover { color: var(--walnut); }
+.mobile-nav a:hover { color: var(--mid); }
 @media (max-width: 780px) {
-  .masthead { grid-template-columns: auto 1fr auto; padding: 0 1.5rem; }
+  .masthead { top: 0; grid-template-columns: auto 1fr auto; padding: 0 1.5rem; }
   .mast-left, .mast-right { display: none; }
   .mast-center { text-align: left; }
   .mast-burger { display: flex; }
@@ -86,173 +117,199 @@ img { display: block; object-fit: cover; }
 
 /* ─── COVER ─────────────────────────────────────────── */
 .cover {
-  min-height: 100svh; padding-top: 52px;
-  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 100svh; padding-top: 86px;
+  display: grid; grid-template-columns: 5fr 7fr;
   position: relative; overflow: hidden;
 }
 .cover-text {
-  background: var(--bark); display: flex; flex-direction: column;
-  justify-content: space-between; padding: 5rem 4rem 4rem; position: relative; z-index: 2;
+  background: var(--d-bg); display: flex; flex-direction: column;
+  justify-content: space-between; padding: 5rem 4.5rem 4rem; position: relative; z-index: 2;
 }
 .cover-issue {
-  font-family: var(--caps); font-weight: 200; font-size: 0.6rem;
-  letter-spacing: 6px; text-transform: uppercase; color: var(--sand); margin-bottom: 0.5rem;
+  font-family: var(--caps); font-weight: 200; font-size: 0.56rem;
+  letter-spacing: 6px; text-transform: uppercase; color: var(--d-muted); margin-bottom: 0.6rem;
 }
 .cover-vol {
   font-family: var(--display); font-weight: 900;
-  font-size: clamp(6rem, 15vw, 14rem); line-height: 0.82; letter-spacing: -3px;
-  color: var(--cream); animation: coverIn 1.4s cubic-bezier(0.16,1,0.3,1) 0.1s backwards;
+  font-size: clamp(7rem, 17vw, 15rem); line-height: 0.8; letter-spacing: -4px;
+  color: var(--d-text); animation: coverIn 1.4s cubic-bezier(0.16,1,0.3,1) 0.1s backwards;
 }
 .cover-name {
   font-family: var(--display); font-style: italic; font-weight: 400;
-  font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--sand);
-  letter-spacing: 1px; line-height: 1.2; margin-top: 1.5rem;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem); color: rgba(247,244,238,0.55);
+  letter-spacing: 1px; line-height: 1.25; margin-top: 1.8rem;
   animation: coverIn 1.4s cubic-bezier(0.16,1,0.3,1) 0.25s backwards;
+}
+.cover-divider {
+  width: 36px; height: 1px; background: rgba(247,244,238,0.2); margin: 2.5rem 0;
 }
 .cover-bottom { animation: coverIn 1.4s cubic-bezier(0.16,1,0.3,1) 0.4s backwards; }
 .cover-tagline {
-  font-family: var(--body); font-style: italic; font-size: 1rem; line-height: 1.8;
-  color: rgba(248,244,225,0.45); max-width: 28ch; margin-bottom: 2.5rem;
+  font-family: var(--body); font-style: italic; font-size: 0.95rem; line-height: 1.85;
+  color: var(--d-muted); max-width: 30ch; margin-bottom: 3rem;
 }
 .cover-cta {
   display: inline-flex; align-items: center; gap: 1rem;
-  font-family: var(--caps); font-weight: 300; font-size: 0.65rem;
-  letter-spacing: 4px; text-transform: uppercase; color: var(--cream);
-  border-bottom: 1px solid rgba(248,244,225,0.2); padding-bottom: 0.3rem;
+  font-family: var(--caps); font-weight: 300; font-size: 0.6rem;
+  letter-spacing: 4px; text-transform: uppercase; color: var(--d-text);
+  border-bottom: 1px solid rgba(247,244,238,0.18); padding-bottom: 0.3rem;
   transition: color 0.2s, gap 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.cover-cta:hover { color: var(--sand); gap: 1.8rem; }
-.cover-cta svg { width: 16px; height: 16px; }
-.cover-rule { position: absolute; left: 4rem; top: 52px; bottom: 0; width: 1px; background: rgba(248,244,225,0.08); }
+.cover-cta:hover { color: rgba(247,244,238,0.65); gap: 1.8rem; }
+.cover-cta svg { width: 15px; height: 15px; }
+.cover-rule { position: absolute; left: 4.5rem; top: 86px; bottom: 0; width: 1px; background: rgba(247,244,238,0.06); }
 .cover-image { position: relative; overflow: hidden; animation: coverImg 2s cubic-bezier(0.16,1,0.3,1) 0s backwards; }
 .cover-image img {
   width: 100%; height: 100%; object-fit: cover; object-position: center top;
-  filter: saturate(0.6) sepia(0.25) contrast(1.08);
+  filter: saturate(0.65) sepia(0.18) contrast(1.06);
   transform: scale(1.05); transition: transform 14s cubic-bezier(0.16,1,0.3,1);
 }
 .cover-image:hover img { transform: scale(1.02); }
 .cover-image-tag {
   position: absolute; bottom: 3rem; left: 2rem;
   writing-mode: vertical-rl; transform: rotate(180deg);
-  font-family: var(--caps); font-weight: 200; font-size: 0.55rem;
-  letter-spacing: 4px; text-transform: uppercase; color: rgba(248,244,225,0.4);
+  font-family: var(--caps); font-weight: 200; font-size: 0.5rem;
+  letter-spacing: 4px; text-transform: uppercase; color: rgba(247,244,238,0.35);
 }
 .cover-image-loc { position: absolute; bottom: 3rem; right: 2rem; text-align: right; }
 .cover-image-loc span {
-  display: block; font-family: var(--caps); font-weight: 200; font-size: 0.55rem;
-  letter-spacing: 3px; text-transform: uppercase; color: rgba(248,244,225,0.4);
+  display: block; font-family: var(--caps); font-weight: 200; font-size: 0.5rem;
+  letter-spacing: 3px; text-transform: uppercase; color: rgba(247,244,238,0.35);
 }
 @media (max-width: 780px) {
-  .cover { grid-template-columns: 1fr; min-height: auto; }
-  .cover-text { padding: 3rem 1.8rem; min-height: 60svh; }
+  .cover { grid-template-columns: 1fr; min-height: auto; padding-top: 58px; }
+  .cover-text { padding: 3rem 1.8rem; min-height: 62svh; }
   .cover-vol { font-size: clamp(5rem, 22vw, 9rem); }
   .cover-image { height: 55vw; min-height: 280px; }
+  .cover-rule { top: 58px; }
 }
 
-/* ─── SECTION MARKER ─────────────────────────────── */
+/* ─── SECTION MARKER ─────────────────────────────────── */
 .section-rule { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.5rem; margin-bottom: 3rem; }
-.section-rule-label { font-family: var(--caps); font-weight: 200; font-size: 0.58rem; letter-spacing: 5px; text-transform: uppercase; color: var(--sand); white-space: nowrap; }
-.section-rule-line { height: 1px; background: var(--sand); opacity: 0.35; }
+.section-rule-label { font-family: var(--caps); font-weight: 200; font-size: 0.55rem; letter-spacing: 5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.section-rule-line { height: 1px; background: var(--rule); }
 
-/* ─── INTRO ──────────────────────────────────────── */
+/* ─── INTRO ──────────────────────────────────────────── */
 .intro {
-  border-top: 3px double var(--bark); border-bottom: 1px solid var(--sand);
-  padding: 5rem 4rem; display: grid; grid-template-columns: 2fr 3fr; gap: 6rem; align-items: start;
+  border-top: 1px solid var(--rule);
+  padding: 7rem 6rem; display: grid; grid-template-columns: 2fr 3fr; gap: 7rem; align-items: start;
 }
 .intro-left h2 {
   font-family: var(--display); font-weight: 900; font-style: italic;
-  font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1.1; color: var(--bark);
+  font-size: clamp(2rem, 3.8vw, 3.2rem); line-height: 1.1; color: var(--ink);
 }
-.intro-right p { font-family: var(--body); font-size: 1.05rem; line-height: 1.9; color: var(--walnut); max-width: 52ch; }
-.intro-right p + p { margin-top: 1.2rem; }
+.intro-left-num {
+  font-family: var(--caps); font-weight: 200; font-size: 0.5rem;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+  display: block;
+}
+.intro-right p { font-family: var(--body); font-size: 1.05rem; line-height: 1.95; color: var(--mid); max-width: 52ch; }
+.intro-right p + p { margin-top: 1.3rem; }
+.intro-right p:first-of-type::first-letter {
+  font-family: var(--display); font-weight: 900; font-style: italic;
+  font-size: 4.2rem; line-height: 0.82; float: left; margin: 0.08em 0.1em 0 0;
+  color: var(--ink);
+}
 .intro-right blockquote {
-  font-family: var(--display); font-style: italic; font-size: 1.25rem; line-height: 1.6;
-  color: var(--bark); border-left: 3px solid var(--sand); padding-left: 1.5rem; margin: 2.5rem 0;
+  font-family: var(--display); font-style: italic; font-size: 1.2rem; line-height: 1.65;
+  color: var(--ink); border-left: 2px solid var(--rule); padding-left: 1.5rem; margin: 2.8rem 0;
 }
-@media (max-width: 700px) { .intro { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.8rem; } }
+@media (max-width: 700px) { .intro { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.8rem; } }
 
-/* ─── PRACTICE ───────────────────────────────────── */
-.practice { background: var(--bark); color: var(--cream); padding: 6rem 4rem; }
+/* ─── PRACTICE ───────────────────────────────────────── */
+.practice { background: var(--d-bg); color: var(--d-text); padding: 7rem 6rem; }
 .practice-header {
-  display: flex; align-items: flex-end; gap: 4rem; margin-bottom: 4rem;
-  border-bottom: 1px solid rgba(248,244,225,0.1); padding-bottom: 2rem;
+  display: flex; align-items: flex-end; gap: 5rem; margin-bottom: 5rem;
+  border-bottom: 1px solid var(--d-rule); padding-bottom: 2.5rem;
 }
 .practice-header h2 {
   font-family: var(--display); font-weight: 900;
-  font-size: clamp(2.5rem, 7vw, 6rem); line-height: 0.9; color: var(--cream); letter-spacing: -1px;
+  font-size: clamp(2.5rem, 7vw, 6rem); line-height: 0.88; color: var(--d-text); letter-spacing: -1px;
 }
-.practice-header h2 em { font-style: italic; color: var(--sand); }
-.practice-header p { font-family: var(--body); font-style: italic; font-size: 1rem; line-height: 1.8; color: rgba(248,244,225,0.4); max-width: 26ch; }
+.practice-header h2 em { font-style: italic; color: rgba(247,244,238,0.45); }
+.practice-eyebrow {
+  font-family: var(--caps); font-weight: 200; font-size: 0.5rem;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--d-muted); margin-bottom: 1rem; display: block;
+}
+.practice-header p { font-family: var(--body); font-style: italic; font-size: 1rem; line-height: 1.85; color: var(--d-muted); max-width: 24ch; }
 .practice-list { display: grid; grid-template-columns: 1fr 1fr; }
 .practice-item {
-  padding: 3rem 2.5rem; border-right: 1px solid rgba(248,244,225,0.08);
-  border-bottom: 1px solid rgba(248,244,225,0.08); position: relative; transition: background 0.4s;
+  padding: 3rem 3rem; border-right: 1px solid var(--d-rule);
+  border-bottom: 1px solid var(--d-rule); position: relative; transition: background 0.4s;
 }
 .practice-item:nth-child(even) { border-right: none; }
 .practice-item:nth-child(3), .practice-item:nth-child(4) { border-bottom: none; }
-.practice-item:hover { background: rgba(248,244,225,0.03); }
+.practice-item:hover { background: rgba(247,244,238,0.025); }
 .pi-num {
   font-family: var(--display); font-weight: 900; font-style: italic;
-  font-size: 4.5rem; line-height: 1; color: rgba(248,244,225,0.06); margin-bottom: 1rem; letter-spacing: -2px;
+  font-size: 5rem; line-height: 1; color: rgba(247,244,238,0.05); margin-bottom: 1.2rem; letter-spacing: -3px;
 }
-.practice-item h3 { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 1.6rem; color: var(--cream); margin-bottom: 0.8rem; }
-.practice-item p { font-family: var(--body); font-size: 0.9rem; line-height: 1.8; color: rgba(248,244,225,0.38); }
+.practice-item h3 { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 1.55rem; color: var(--d-text); margin-bottom: 0.9rem; }
+.practice-item p { font-family: var(--body); font-size: 0.9rem; line-height: 1.85; color: var(--d-muted); }
 @media (max-width: 700px) {
   .practice { padding: 4rem 1.8rem; }
-  .practice-header { flex-direction: column; gap: 1.5rem; margin-bottom: 2.5rem; }
+  .practice-header { flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
   .practice-list { grid-template-columns: 1fr; }
-  .practice-item { border-right: none; border-bottom: 1px solid rgba(248,244,225,0.08); }
+  .practice-item { border-right: none; border-bottom: 1px solid var(--d-rule); }
   .practice-item:last-child { border-bottom: none; }
 }
 
-/* ─── ARCHIVE ─────────────────────────────────────── */
-.archive { padding: 6rem 4rem; }
-.archive-masthead { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; margin-bottom: 1rem; }
+/* ─── ARCHIVE ─────────────────────────────────────────── */
+.archive { padding: 7rem 6rem; }
+.archive-masthead { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; margin-bottom: 1.5rem; }
 .archive-masthead h2 {
   font-family: var(--display); font-weight: 900;
-  font-size: clamp(2.8rem, 7vw, 6.5rem); line-height: 0.85; letter-spacing: -2px; color: var(--bark);
+  font-size: clamp(2.8rem, 7vw, 6rem); line-height: 0.85; letter-spacing: -2px; color: var(--ink);
 }
-.archive-masthead h2 em { display: block; font-style: italic; font-weight: 400; font-size: 0.45em; color: var(--sand); }
-.archive-note { font-family: var(--caps); font-weight: 200; font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase; color: var(--sand); max-width: 18ch; text-align: right; }
-.archive-note a { color: var(--walnut); border-bottom: 1px solid var(--sand); }
+.archive-masthead h2 em { display: block; font-style: italic; font-weight: 400; font-size: 0.42em; color: var(--muted); letter-spacing: 0; margin-top: 0.6rem; }
+.archive-note { font-family: var(--caps); font-weight: 200; font-size: 0.52rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); max-width: 18ch; text-align: right; }
+.archive-note a { color: var(--mid); border-bottom: 1px solid var(--rule); }
 
 /* Tabs */
 .tab-strip {
-  display: flex; border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand);
+  display: flex; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
   margin-bottom: 4rem; overflow-x: auto; -webkit-overflow-scrolling: touch;
 }
 .tab-strip::-webkit-scrollbar { display: none; }
 .tab-btn {
-  font-family: var(--caps); font-weight: 300; font-size: 0.62rem;
+  font-family: var(--caps); font-weight: 300; font-size: 0.58rem;
   letter-spacing: 4px; text-transform: uppercase; white-space: nowrap;
-  color: var(--sand); padding: 1rem 1.8rem;
-  border-right: 1px solid rgba(175,143,111,0.25);
+  color: var(--muted); padding: 1.1rem 2rem;
+  border-right: 1px solid rgba(203,195,181,0.35);
   border-bottom: 2px solid transparent; margin-bottom: -1px;
   transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 .tab-btn:last-child { border-right: none; }
-.tab-btn:hover { color: var(--bark); background: rgba(116,81,45,0.04); }
-.tab-btn.active { color: var(--bark); border-bottom-color: var(--bark); }
+.tab-btn:hover { color: var(--ink); background: rgba(90,64,50,0.03); }
+.tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
 .port-section { display: none; }
 .port-section.active { display: block; }
 
-/* ── SPREAD LAYOUTS ── */
-.spread-a { display: grid; grid-template-columns: 7fr 3fr; gap: 3px; margin-bottom: 3px; }
-.spread-a-right { display: grid; grid-template-rows: 1fr 1fr; gap: 3px; }
-.spread-full { margin-bottom: 3px; }
-.spread-c { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 3px; }
-.spread-d { display: grid; grid-template-columns: 2fr 3fr; gap: 3px; margin-bottom: 3px; }
-.spread-e { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 0; margin-bottom: 3px; border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand); }
-.spread-e-text { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--sand); }
-.spread-e-text-right { padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--sand); }
-.spread-e-text h4, .spread-e-text-right h4 { font-family: var(--display); font-weight: 700; font-style: italic; font-size: 1.4rem; color: var(--bark); margin-bottom: 0.8rem; }
-.spread-e-text p, .spread-e-text-right p { font-family: var(--body); font-size: 0.88rem; line-height: 1.8; color: var(--walnut); }
-.spread-e-text .pull { font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--bark); border-top: 1px solid var(--sand); padding-top: 1.5rem; margin-top: 1.5rem; line-height: 1.5; }
+/* ── INSTAGRAM GRID LAYOUT ── */
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+.ig-grid .gc { aspect-ratio: 1; }
+
+/* hover overlay for instagram feel */
+.ig-grid .gc::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(26,19,13,0);
+  transition: background 0.3s;
+  pointer-events: none;
+}
+.ig-grid .gc:hover::after { background: rgba(26,19,13,0.18); }
+
+@media (max-width: 600px) {
+  .ig-grid { gap: 2px; }
+}
 
 /* ── IMAGE CELLS ── */
 .gc {
   overflow: hidden; cursor: zoom-in; position: relative;
-  /* Warm shimmer while loading */
   background: linear-gradient(90deg, #e8e2d0 25%, #f0ead8 50%, #e8e2d0 75%);
   background-size: 200% 100%;
   animation: gc-shimmer 1.6s ease-in-out infinite;
@@ -262,12 +319,12 @@ img { display: block; object-fit: cover; }
 
 .gc img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: sepia(0.08) contrast(1.04);
+  filter: sepia(0.06) contrast(1.04);
   opacity: 0;
   transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.5s, opacity 0.5s ease;
 }
 .gc.loaded img { opacity: 1; }
-.gc:hover img { transform: scale(1.05); filter: sepia(0) contrast(1.02); }
+.gc:hover img { transform: scale(1.04); filter: sepia(0) contrast(1.02); }
 
 /* Aspect ratios */
 .gc.tall { aspect-ratio: 2/3; }
@@ -280,8 +337,8 @@ img { display: block; object-fit: cover; }
 /* Caption chip */
 .gc-cap {
   position: absolute; bottom: 0; left: 0;
-  background: var(--bark); color: var(--sand);
-  font-family: var(--caps); font-weight: 200; font-size: 0.5rem;
+  background: var(--d-bg); color: rgba(247,244,238,0.6);
+  font-family: var(--caps); font-weight: 200; font-size: 0.48rem;
   letter-spacing: 3px; text-transform: uppercase;
   padding: 0.35rem 0.8rem; opacity: 0; transition: opacity 0.3s;
   pointer-events: none;
@@ -289,10 +346,10 @@ img { display: block; object-fit: cover; }
 .gc:hover .gc-cap { opacity: 1; }
 
 /* Series heading */
-.series-head { display: flex; align-items: baseline; gap: 2rem; margin: 5rem 0 2rem; padding-bottom: 0.8rem; border-bottom: 2px solid var(--bark); }
+.series-head { display: flex; align-items: center; gap: 1.2rem; margin: 4rem 0 0.8rem; }
 .series-head:first-child { margin-top: 0; }
-.sh-title { font-family: var(--display); font-weight: 900; font-style: italic; font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--bark); }
-.sh-num { font-family: var(--caps); font-weight: 200; font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase; color: var(--sand); }
+.sh-title { font-family: var(--caps); font-weight: 300; font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--ink); }
+.sh-num { font-family: var(--caps); font-weight: 200; font-size: 0.52rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
 
 @media (max-width: 780px) {
   .archive { padding: 4rem 1.2rem; }
@@ -306,58 +363,62 @@ img { display: block; object-fit: cover; }
   .gc.tall, .gc.wide { aspect-ratio: 3/2; }
 }
 
-/* ─── COMMISSION ─────────────────────────────────── */
-.commission { border-top: 3px double var(--bark); display: grid; grid-template-columns: 5fr 7fr; min-height: 80vh; }
-.commission-left {
-  background: var(--walnut); padding: 6rem 4rem;
-  display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--bark);
+/* ─── COMMISSION ─────────────────────────────────────── */
+.commission {
+  border-top: 1px solid var(--rule);
+  display: grid; grid-template-columns: 5fr 7fr; min-height: 80vh;
 }
-.comm-eyebrow { font-family: var(--caps); font-weight: 200; font-size: 0.58rem; letter-spacing: 5px; text-transform: uppercase; color: rgba(248,244,225,0.35); margin-bottom: 1rem; }
-.commission-left h2 { font-family: var(--display); font-weight: 900; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.9; color: var(--cream); letter-spacing: -1px; }
-.commission-left h2 em { display: block; font-style: italic; font-weight: 400; font-size: 0.6em; color: var(--sand); letter-spacing: 0; margin-top: 0.5rem; }
-.commission-body { font-family: var(--body); font-style: italic; font-size: 1rem; line-height: 1.9; color: rgba(248,244,225,0.5); max-width: 34ch; }
-.commission-note { font-family: var(--caps); font-weight: 200; font-size: 0.58rem; letter-spacing: 2px; color: rgba(248,244,225,0.25); line-height: 1.9; }
+.commission-left {
+  background: var(--d-bg); padding: 7rem 5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: 1px solid rgba(0,0,0,0.15);
+}
+.comm-eyebrow { font-family: var(--caps); font-weight: 200; font-size: 0.54rem; letter-spacing: 5px; text-transform: uppercase; color: var(--d-muted); margin-bottom: 1.2rem; display: block; }
+.commission-left h2 { font-family: var(--display); font-weight: 900; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.88; color: var(--d-text); letter-spacing: -1px; }
+.commission-left h2 em { display: block; font-style: italic; font-weight: 400; font-size: 0.6em; color: var(--d-muted); letter-spacing: 0; margin-top: 0.6rem; }
+.commission-body { font-family: var(--body); font-style: italic; font-size: 1rem; line-height: 1.95; color: var(--d-muted); max-width: 32ch; }
+.commission-note { font-family: var(--caps); font-weight: 200; font-size: 0.52rem; letter-spacing: 2px; color: rgba(247,244,238,0.2); line-height: 1.95; }
 .commission-links { display: flex; flex-direction: column; }
 .c-link {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem 0; border-bottom: 1px solid rgba(248,244,225,0.1);
-  font-family: var(--caps); font-weight: 300; font-size: 0.65rem;
-  letter-spacing: 3px; text-transform: uppercase; color: rgba(248,244,225,0.55);
+  padding: 1.1rem 0; border-bottom: 1px solid var(--d-rule);
+  font-family: var(--caps); font-weight: 300; font-size: 0.6rem;
+  letter-spacing: 3px; text-transform: uppercase; color: rgba(247,244,238,0.45);
   transition: color 0.2s, padding-left 0.3s;
 }
-.c-link:first-child { border-top: 1px solid rgba(248,244,225,0.1); }
-.c-link:hover { color: var(--cream); padding-left: 0.5rem; }
+.c-link:first-child { border-top: 1px solid var(--d-rule); }
+.c-link:hover { color: var(--d-text); padding-left: 0.5rem; }
 .c-link svg { flex-shrink: 0; }
-.commission-right { display: flex; flex-direction: column; background: var(--cream); }
-.form-bar { padding: 1.5rem 3rem; font-family: var(--caps); font-weight: 200; font-size: 0.58rem; letter-spacing: 5px; text-transform: uppercase; color: var(--sand); border-bottom: 1px solid var(--sand); }
-.commission-right iframe { flex: 1; width: 100%; min-height: 700px; border: none; display: block; background: var(--cream); }
+.commission-right { display: flex; flex-direction: column; background: var(--bg); }
+.form-bar { padding: 1.4rem 3rem; font-family: var(--caps); font-weight: 200; font-size: 0.54rem; letter-spacing: 5px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); }
+.commission-right iframe { flex: 1; width: 100%; min-height: 700px; border: none; display: block; background: var(--bg); }
 @media (max-width: 780px) {
   .commission { grid-template-columns: 1fr; min-height: auto; }
-  .commission-left { padding: 4rem 1.8rem; border-right: none; border-bottom: 1px solid var(--bark); }
+  .commission-left { padding: 4rem 1.8rem; border-right: none; border-bottom: 1px solid rgba(247,244,238,0.06); }
   .commission-right iframe { min-height: 600px; }
   .form-bar { padding: 1.2rem 1.5rem; }
 }
 
-/* ─── FOOTER ─────────────────────────────────────── */
+/* ─── FOOTER ─────────────────────────────────────────── */
 .footer {
-  background: var(--ink); border-top: 3px solid var(--bark);
-  display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 1.5rem 3rem; gap: 1rem;
+  background: var(--d-bg); border-top: 1px solid rgba(247,244,238,0.06);
+  display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; padding: 1.8rem 3rem; gap: 1rem;
 }
-.footer-logo { font-family: var(--display); font-weight: 900; font-style: italic; font-size: 1rem; color: rgba(248,244,225,0.2); }
-.footer-copy { font-family: var(--caps); font-weight: 200; font-size: 0.5rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(248,244,225,0.1); text-align: center; }
+.footer-logo { font-family: var(--display); font-weight: 900; font-style: italic; font-size: 1rem; color: rgba(247,244,238,0.18); }
+.footer-copy { font-family: var(--caps); font-weight: 200; font-size: 0.46rem; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(247,244,238,0.12); text-align: center; }
 .footer-ig { text-align: right; }
-.footer-ig a { font-family: var(--caps); font-weight: 200; font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase; color: var(--sand); opacity: 0.5; transition: opacity 0.2s; }
-.footer-ig a:hover { opacity: 1; }
+.footer-ig a { font-family: var(--caps); font-weight: 200; font-size: 0.52rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(247,244,238,0.4); transition: color 0.2s; }
+.footer-ig a:hover { color: rgba(247,244,238,0.7); }
 @media (max-width: 600px) { .footer { grid-template-columns: 1fr; padding: 1.5rem; text-align: center; } .footer-ig { text-align: center; } }
 
-/* ─── LIGHTBOX ───────────────────────────────────── */
+/* ─── LIGHTBOX ───────────────────────────────────────── */
 .lb {
   position: fixed; inset: 0; z-index: 999;
-  background: rgba(26,15,0,0); backdrop-filter: blur(0);
+  background: rgba(26,19,13,0); backdrop-filter: blur(0);
   display: flex; align-items: center; justify-content: center;
   pointer-events: none; transition: background 0.35s, backdrop-filter 0.35s;
 }
-.lb.open { background: rgba(26,15,0,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: all; }
+.lb.open { background: rgba(26,19,13,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: all; }
 .lb-wrap {
   position: relative;
   max-width: min(90vw, 1100px); max-height: 88vh;
@@ -368,16 +429,15 @@ img { display: block; object-fit: cover; }
 .lb.open .lb-wrap { opacity: 1; transform: scale(1); }
 .lb-wrap img { max-width: 100%; max-height: 88vh; width: auto; height: auto; display: block; transition: opacity 0.35s ease; }
 
-/* Spinner shown while full-res loads */
 .lb-spinner {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  color: rgba(248,244,225,0.35);
-  font-family: var(--caps); font-weight: 200; font-size: 0.55rem; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(247,244,238,0.35);
+  font-family: var(--caps); font-weight: 200; font-size: 0.52rem; letter-spacing: 4px; text-transform: uppercase;
 }
 .lb-spinner-ring {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(248,244,225,0.1); border-top-color: var(--sand);
+  width: 34px; height: 34px;
+  border: 1px solid rgba(247,244,238,0.1); border-top-color: var(--muted);
   border-radius: 50%; animation: lb-spin 0.9s linear infinite;
 }
 @keyframes lb-spin { to { transform: rotate(360deg); } }
@@ -385,35 +445,35 @@ img { display: block; object-fit: cover; }
 .lb-close {
   position: fixed; top: 1.5rem; right: 1.5rem; z-index: 1001;
   width: 40px; height: 40px; cursor: pointer;
-  border: 1px solid rgba(248,244,225,0.15); background: rgba(26,15,0,0.6); color: rgba(248,244,225,0.5);
+  border: 1px solid rgba(247,244,238,0.12); background: rgba(26,19,13,0.5); color: rgba(247,244,238,0.45);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity 0.3s, color 0.2s;
 }
 .lb.open .lb-close { opacity: 1; pointer-events: all; }
-.lb-close:hover { color: var(--cream); }
+.lb-close:hover { color: var(--d-text); }
 .lb-prev, .lb-next {
   position: fixed; top: 50%; transform: translateY(-50%); z-index: 1001;
   width: 44px; height: 44px; cursor: pointer;
-  border: 1px solid rgba(248,244,225,0.1); background: rgba(26,15,0,0.5);
-  color: rgba(248,244,225,0.4); display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(247,244,238,0.08); background: rgba(26,19,13,0.4);
+  color: rgba(247,244,238,0.35); display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity 0.3s, color 0.2s;
 }
 .lb.open .lb-prev, .lb.open .lb-next { opacity: 1; pointer-events: all; }
 .lb-prev { left: 1.5rem; }
 .lb-next { right: 1.5rem; }
-.lb-prev:hover, .lb-next:hover { color: var(--cream); border-color: rgba(248,244,225,0.3); }
+.lb-prev:hover, .lb-next:hover { color: var(--d-text); border-color: rgba(247,244,238,0.25); }
 .lb-counter {
   position: fixed; bottom: 1.8rem; left: 50%; transform: translateX(-50%);
-  font-family: var(--caps); font-size: 0.58rem; letter-spacing: 4px; text-transform: uppercase;
-  color: rgba(248,244,225,0.2); z-index: 1001;
+  font-family: var(--caps); font-size: 0.52rem; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(247,244,238,0.2); z-index: 1001;
   opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .lb.open .lb-counter { opacity: 1; }
 
-/* ─── ANIMATIONS ─────────────────────────────────── */
-@keyframes coverIn  { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+/* ─── ANIMATIONS ─────────────────────────────────────── */
+@keyframes coverIn  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 @keyframes coverImg { from { opacity: 0; } to { opacity: 1; } }
-.rv { opacity: 0; transform: translateY(24px); transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+.rv { opacity: 0; transform: translateY(20px); transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
 .rv.in { opacity: 1; transform: none; }
 .rv-d1 { transition-delay: 0.1s; }
 .rv-d2 { transition-delay: 0.22s; }
@@ -422,6 +482,19 @@ img { display: block; object-fit: cover; }
 </style>
 </head>
 <body>
+
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span>Visual Archive</span>
+    <div style="display:flex;align-items:center;gap:0;">
+      <span class="hi">Saaim's Frames</span>
+      <div class="topbar-divider"></div>
+      <span>Photography · Edmonton, AB</span>
+    </div>
+    <span>Est. 2024 · Vol. I</span>
+  </div>
+</div>
 
 <!-- ── MASTHEAD ── -->
 <nav class="masthead" id="masthead">
@@ -456,6 +529,7 @@ img { display: block; object-fit: cover; }
       <div class="cover-issue">Visual Archive — Vol. I</div>
       <div class="cover-vol">SF</div>
       <div class="cover-name">Saaim's<br>Frames</div>
+      <div class="cover-divider" aria-hidden="true"></div>
     </div>
     <div class="cover-bottom">
       <p class="cover-tagline">A personal record of photographs made across disciplines, across light, across subjects worth standing still for.</p>
@@ -479,6 +553,7 @@ img { display: block; object-fit: cover; }
 <!-- ── INTRO / ABOUT ── -->
 <section class="intro" id="about">
   <div class="intro-left rv">
+    <span class="intro-left-num">§ 01 — About</span>
     <h2>Making images that stay with you</h2>
   </div>
   <div class="intro-right rv rv-d2">
@@ -491,7 +566,10 @@ img { display: block; object-fit: cover; }
 <!-- ── PRACTICE ── -->
 <section class="practice" id="practice">
   <div class="practice-header rv">
-    <h2>The <em>Practice</em></h2>
+    <div>
+      <span class="practice-eyebrow">§ 02 — Practice</span>
+      <h2>The <em>Practice</em></h2>
+    </div>
     <p>Four disciplines. Each approached on its own terms, with full attention.</p>
   </div>
   <div class="practice-list">
@@ -525,178 +603,89 @@ img { display: block; object-fit: cover; }
     <p class="archive-note rv">All images published with consent. <a href="#commission">Request removal.</a></p>
   </div>
 
-  <div class="tab-strip" role="tablist">
+  <!--<div class="tab-strip" role="tablist">
     <button class="tab-btn active" data-cat="all"        role="tab" aria-selected="true">All</button>
     <button class="tab-btn"        data-cat="automotive" role="tab" aria-selected="false">Automotive</button>
     <button class="tab-btn"        data-cat="lifestyle"  role="tab" aria-selected="false">Lifestyle</button>
     <button class="tab-btn"        data-cat="portrait"   role="tab" aria-selected="false">Portrait</button>
     <button class="tab-btn"        data-cat="events"     role="tab" aria-selected="false">Events</button>
-  </div>
+  </div>-->
 
   <!-- ─ ALL ─ -->
   <div class="port-section active" data-section="all">
 
-    <div class="series-head"><span class="sh-title">Lifestyle &amp; Editorial</span><span class="sh-num">Series 01</span></div>
-    <div class="spread-a">
-      <div class="gc tall">
-        <img src="assets/samples/webp/creative1.webp"   data-full="assets/samples/full-size/creative1.jpeg"   alt="Lifestyle 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Lifestyle 01</span>
-      </div>
-      <div class="spread-a-right">
-        <div class="gc auto">
-          <img src="assets/samples/webp/creative3.webp" data-full="assets/samples/full-size/creative3.jpeg" alt="Lifestyle 02" loading="lazy" decoding="async">
-          <span class="gc-cap">Lifestyle 02</span>
-        </div>
-        <div class="gc auto">
-          <img src="assets/samples/webp/creative4.webp"  data-full="assets/samples/full-size/creative4.JPG"  alt="Lifestyle 03" loading="lazy" decoding="async">
-          <span class="gc-cap">Lifestyle 03</span>
-        </div>
-      </div>
-    </div>
-    <div class="spread-e">
-      <div class="spread-e-text">
-        <h4>Candid, Observed</h4>
-        <p>Images made in the world as it is — lifestyle and editorial work that sits between documentation and art.</p>
-        <div class="pull">"Light found in ordinary places."</div>
-      </div>
-      <div class="gc wide" style="aspect-ratio:unset; min-height:360px;">
-        <img src="assets/samples/webp/creative5.webp"    data-full="assets/samples/full-size/creative5.JPG"    alt="Lifestyle 04" loading="lazy" decoding="async">
-        <span class="gc-cap">Lifestyle 04</span>
-      </div>
-      <div class="spread-e-text-right">
-        <h4>Edmonton, AB</h4>
-        <p>Shot across the city — streets, studios, wherever the light was right.</p>
-      </div>
+    <div class="series-head"><span class="sh-title">Lifestyle &amp; Editorial</span><span class="sh-num">01</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/creative1.webp" data-full="assets/samples/full-size/creative1.jpeg" alt="Lifestyle 01" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative3.webp" data-full="assets/samples/full-size/creative3.jpeg" alt="Lifestyle 02" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative4.webp" data-full="assets/samples/full-size/creative4.JPG"  alt="Lifestyle 03" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative5.webp" data-full="assets/samples/full-size/creative5.JPG"  alt="Lifestyle 04" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 04</span></div>
     </div>
 
-    <div class="series-head"><span class="sh-title">Automotive</span><span class="sh-num">Series 02</span></div>
-    <div class="spread-full">
-      <div class="gc wide">
-        <img src="assets/samples/webp/automotive1.webp" data-full="assets/samples/full-size/automotive1.jpeg" alt="Automotive 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Automotive 01</span>
-      </div>
-    </div>
-    <div class="spread-c">
-      <div class="gc land">
-        <img src="assets/samples/webp/automotive2.webp" data-full="assets/samples/full-size/automotive2.jpeg" alt="Automotive 02" loading="lazy" decoding="async">
-        <span class="gc-cap">Automotive 02</span>
-      </div>
-      <div class="gc land">
-        <img src="assets/samples/webp/automotive3.webp" data-full="assets/samples/full-size/automotive3.jpeg" alt="Automotive 03" loading="lazy" decoding="async">
-        <span class="gc-cap">Automotive 03</span>
-      </div>
-      <div class="gc land">
-        <img src="assets/samples/webp/automotive4.webp" data-full="assets/samples/full-size/automotive4.jpeg" alt="Automotive 04" loading="lazy" decoding="async">
-        <span class="gc-cap">Automotive 04</span>
-      </div>
+    <div class="series-head"><span class="sh-title">Automotive</span><span class="sh-num">02</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/automotive1.webp" data-full="assets/samples/full-size/automotive1.jpeg" alt="Automotive 01" loading="lazy" decoding="async"><span class="gc-cap">Automotive 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive2.webp" data-full="assets/samples/full-size/automotive2.jpeg" alt="Automotive 02" loading="lazy" decoding="async"><span class="gc-cap">Automotive 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive3.webp" data-full="assets/samples/full-size/automotive3.jpeg" alt="Automotive 03" loading="lazy" decoding="async"><span class="gc-cap">Automotive 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive4.webp" data-full="assets/samples/full-size/automotive4.jpeg" alt="Automotive 04" loading="lazy" decoding="async"><span class="gc-cap">Automotive 04</span></div>
     </div>
 
-    <div class="series-head"><span class="sh-title">Portrait</span><span class="sh-num">Series 03</span></div>
-    <div class="spread-full">
-      <div class="gc wide">
-        <img src="assets/samples/webp/portrait3.webp" data-full="assets/samples/full-size/portrait3.jpg" alt="Automotive 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Portrait 3</span>
-      </div>
-    </div>
-    <div class="spread-d">
-      <div class="gc tall">
-        <img src="assets/samples/webp/portrait1.webp"    data-full="assets/samples/full-size/portrait1.png"    alt="Portrait 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Portrait 01</span>
-      </div>
-      <div class="gc tall">
-        <img src="assets/samples/webp/portrait2.webp"    data-full="assets/samples/full-size/portrait2.png"    alt="Portrait 02" loading="lazy" decoding="async">
-        <span class="gc-cap">Portrait 02</span>
-      </div>
+    <div class="series-head"><span class="sh-title">Portrait</span><span class="sh-num">03</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/portrait1.webp" data-full="assets/samples/full-size/portrait1.png" alt="Portrait 01" loading="lazy" decoding="async"><span class="gc-cap">Portrait 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/portrait2.webp" data-full="assets/samples/full-size/portrait2.png" alt="Portrait 02" loading="lazy" decoding="async"><span class="gc-cap">Portrait 02</span></div>
     </div>
 
-    <div class="series-head"><span class="sh-title">Events</span><span class="sh-num">Series 04</span></div>
-    <div class="spread-d">
+    <div class="series-head"><span class="sh-title">Events</span><span class="sh-num">04</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/event1.webp" data-full="assets/samples/full-size/event1.jpg" alt="Event 01" loading="lazy" decoding="async"><span class="gc-cap">Event 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/event2.webp" data-full="assets/samples/full-size/event2.jpg" alt="Event 02" loading="lazy" decoding="async"><span class="gc-cap">Event 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/event3.webp" data-full="assets/samples/full-size/event3.jpg" alt="Event 03" loading="lazy" decoding="async"><span class="gc-cap">Event 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/event4.webp" data-full="assets/samples/full-size/event4.jpg" alt="Event 04" loading="lazy" decoding="async"><span class="gc-cap">Event 04</span></div>
+      <div class="gc"><img src="assets/samples/webp/event5.webp" data-full="assets/samples/full-size/event5.jpg" alt="Event 05" loading="lazy" decoding="async"><span class="gc-cap">Event 05</span></div>
       <div class="gc land">
-        <img src="assets/samples/webp/event1.webp"       data-full="assets/samples/full-size/event1.jpg"       alt="Event 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 01</span>
-      </div>
-      <div class="gc land">
-        <img src="assets/samples/webp/event2.webp"       data-full="assets/samples/full-size/event2.jpg"       alt="Event 02" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 02</span>
-      </div>
-    </div>
-    <div class="spread-full" style="margin-bottom:3px;">
-      <div class="gc wide">
-        <img src="assets/samples/webp/event3.webp"       data-full="assets/samples/full-size/event3.jpg"       alt="Event 03" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 03</span>
-      </div>
-    </div>
-    <div class="spread-c">
-      <div class="gc land">
-        <img src="assets/samples/webp/event4.webp"       data-full="assets/samples/full-size/event4.jpg"       alt="Event 04" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 04</span>
-      </div>
-      <div class="gc land">
-        <img src="assets/samples/webp/event5.webp"       data-full="assets/samples/full-size/event5.jpg"       alt="Event 05" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 05</span>
-      </div>
-      <div class="gc land">
-        <img src="assets/samples/webp/event6.webp"       data-full="assets/samples/full-size/event6.jpg"       alt="Event 06" loading="lazy" decoding="async">
-        <span class="gc-cap">Event 06</span>
-      </div>
+      <div class="gc"><img src="assets/samples/webp/event6.webp" data-full="assets/samples/full-size/event6.jpg" alt="Event 06" loading="lazy" decoding="async"><span class="gc-cap">Event 06</span></div>
     </div>
   </div>
 
   <!-- ─ AUTOMOTIVE ─ -->
   <div class="port-section" data-section="automotive">
-    <div class="spread-full">
-      <div class="gc wide">
-        <img src="assets/samples/webp/automotive1.webp" data-full="assets/samples/full-size/automotive1.jpeg" alt="Automotive 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Automotive 01</span>
-      </div>
-    </div>
-    <div class="spread-c">
-      <div class="gc land"><img src="assets/samples/webp/automotive2.webp" data-full="assets/samples/full-size/automotive2.jpeg" alt="Automotive 02" loading="lazy" decoding="async"><span class="gc-cap">Automotive 02</span></div>
-      <div class="gc land"><img src="assets/samples/webp/automotive3.webp" data-full="assets/samples/full-size/automotive3.jpeg" alt="Automotive 03" loading="lazy" decoding="async"><span class="gc-cap">Automotive 03</span></div>
-      <div class="gc land"><img src="assets/samples/webp/automotive4.webp" data-full="assets/samples/full-size/automotive4.jpeg" alt="Automotive 04" loading="lazy" decoding="async"><span class="gc-cap">Automotive 04</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/automotive1.webp" data-full="assets/samples/full-size/automotive1.jpeg" alt="Automotive 01" loading="lazy" decoding="async"><span class="gc-cap">Automotive 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive2.webp" data-full="assets/samples/full-size/automotive2.jpeg" alt="Automotive 02" loading="lazy" decoding="async"><span class="gc-cap">Automotive 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive3.webp" data-full="assets/samples/full-size/automotive3.jpeg" alt="Automotive 03" loading="lazy" decoding="async"><span class="gc-cap">Automotive 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/automotive4.webp" data-full="assets/samples/full-size/automotive4.jpeg" alt="Automotive 04" loading="lazy" decoding="async"><span class="gc-cap">Automotive 04</span></div>
     </div>
   </div>
 
   <!-- ─ LIFESTYLE ─ -->
   <div class="port-section" data-section="lifestyle">
-    <div class="spread-a">
-      <div class="gc tall"><img src="assets/samples/webp/creative1.webp" data-full="assets/samples/full-size/creative1.jpeg" alt="Lifestyle 01" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 01</span></div>
-      <div class="spread-a-right">
-        <div class="gc auto"><img src="assets/samples/webp/creative3.webp" data-full="assets/samples/full-size/creative3.jpeg" alt="Lifestyle 02" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 02</span></div>
-        <div class="gc auto"><img src="assets/samples/webp/creative4.webp"  data-full="assets/samples/full-size/creative4.JPG"  alt="Lifestyle 03" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 03</span></div>
-      </div>
-    </div>
-    <div class="spread-full">
-      <div class="gc wide"><img src="assets/samples/webp/creative5.webp" data-full="assets/samples/full-size/creative5.JPG" alt="Lifestyle 04" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 04</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/creative1.webp" data-full="assets/samples/full-size/creative1.jpeg" alt="Lifestyle 01" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative3.webp" data-full="assets/samples/full-size/creative3.jpeg" alt="Lifestyle 02" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative4.webp" data-full="assets/samples/full-size/creative4.JPG"  alt="Lifestyle 03" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/creative5.webp" data-full="assets/samples/full-size/creative5.JPG"  alt="Lifestyle 04" loading="lazy" decoding="async"><span class="gc-cap">Lifestyle 04</span></div>
     </div>
   </div>
 
   <!-- ─ PORTRAIT ─ -->
   <div class="port-section" data-section="portrait">
-    <div class="spread-full">
-      <div class="gc wide">
-        <img src="assets/samples/webp/portrait3.webp" data-full="assets/samples/full-size/portrait3.jpg" alt="Automotive 01" loading="lazy" decoding="async">
-        <span class="gc-cap">Portrait 3</span>
-    </div>
-    <div class="spread-d">
-      <div class="gc tall"><img src="assets/samples/webp/portrait1.webp" data-full="assets/samples/full-size/portrait1.png" alt="Portrait 01" loading="lazy" decoding="async"><span class="gc-cap">Portrait 01</span></div>
-      <div class="gc tall"><img src="assets/samples/webp/portrait2.webp" data-full="assets/samples/full-size/portrait2.png" alt="Portrait 02" loading="lazy" decoding="async"><span class="gc-cap">Portrait 02</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/portrait1.webp" data-full="assets/samples/full-size/portrait1.png" alt="Portrait 01" loading="lazy" decoding="async"><span class="gc-cap">Portrait 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/portrait2.webp" data-full="assets/samples/full-size/portrait2.png" alt="Portrait 02" loading="lazy" decoding="async"><span class="gc-cap">Portrait 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/portrait3.webp" data-full="assets/samples/full-size/portrait3.jpg" alt="Portrait 03" loading="lazy" decoding="async"><span class="gc-cap">Portrait 03</span></div>
     </div>
   </div>
 
   <!-- ─ EVENTS ─ -->
   <div class="port-section" data-section="events">
-    <div class="spread-d">
-      <div class="gc land"><img src="assets/samples/webp/event1.webp" data-full="assets/samples/full-size/event1.jpg" alt="Event 01" loading="lazy" decoding="async"><span class="gc-cap">Event 01</span></div>
-      <div class="gc land"><img src="assets/samples/webp/event2.webp" data-full="assets/samples/full-size/event2.jpg" alt="Event 02" loading="lazy" decoding="async"><span class="gc-cap">Event 02</span></div>
-    </div>
-    <div class="spread-full" style="margin-bottom:3px;">
-      <div class="gc wide"><img src="assets/samples/webp/event3.webp" data-full="assets/samples/full-size/event3.jpg" alt="Event 03" loading="lazy" decoding="async"><span class="gc-cap">Event 03</span></div>
-    </div>
-    <div class="spread-c">
-      <div class="gc land"><img src="assets/samples/webp/event4.webp" data-full="assets/samples/full-size/event4.jpg" alt="Event 04" loading="lazy" decoding="async"><span class="gc-cap">Event 04</span></div>
-      <div class="gc land"><img src="assets/samples/webp/event5.webp" data-full="assets/samples/full-size/event5.jpg" alt="Event 05" loading="lazy" decoding="async"><span class="gc-cap">Event 05</span></div>
-      <div class="gc land"><img src="assets/samples/webp/event6.webp" data-full="assets/samples/full-size/event6.jpg" alt="Event 06" loading="lazy" decoding="async"><span class="gc-cap">Event 06</span></div>
+    <div class="ig-grid">
+      <div class="gc"><img src="assets/samples/webp/event1.webp" data-full="assets/samples/full-size/event1.jpg" alt="Event 01" loading="lazy" decoding="async"><span class="gc-cap">Event 01</span></div>
+      <div class="gc"><img src="assets/samples/webp/event2.webp" data-full="assets/samples/full-size/event2.jpg" alt="Event 02" loading="lazy" decoding="async"><span class="gc-cap">Event 02</span></div>
+      <div class="gc"><img src="assets/samples/webp/event3.webp" data-full="assets/samples/full-size/event3.jpg" alt="Event 03" loading="lazy" decoding="async"><span class="gc-cap">Event 03</span></div>
+      <div class="gc"><img src="assets/samples/webp/event4.webp" data-full="assets/samples/full-size/event4.jpg" alt="Event 04" loading="lazy" decoding="async"><span class="gc-cap">Event 04</span></div>
+      <div class="gc"><img src="assets/samples/webp/event5.webp" data-full="assets/samples/full-size/event5.jpg" alt="Event 05" loading="lazy" decoding="async"><span class="gc-cap">Event 05</span></div>
+      <div class="gc"><img src="assets/samples/webp/event6.webp" data-full="assets/samples/full-size/event6.jpg" alt="Event 06" loading="lazy" decoding="async"><span class="gc-cap">Event 06</span></div>
     </div>
   </div>
 
@@ -706,16 +695,14 @@ img { display: block; object-fit: cover; }
 <section class="commission" id="commission">
   <div class="commission-left">
     <div>
-      <div class="comm-eyebrow">Commission Inquiry</div>
+      <span class="comm-eyebrow">§ 03 — Commission Inquiry</span>
       <h2>Commission<em>a project</em></h2>
     </div>
     <p class="commission-body">If something in this archive resonated — a quality of light, a way of seeing — I'd like to hear what you have in mind.</p>
     <p class="commission-note">I take on a limited number of commissions at a time to give each one full attention. Response time is typically 2–3 days.</p>
     <div class="commission-links">
-      <a href="mailto:contact@saaimsframes.ca" class="c-link">
-        contact@saaimsframes.ca
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <a href="mailto:contact@saaimsframes.ca" class="c-link">contact@saaimsframes.ca
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       <a href="https://www.instagram.com/saaims.frames/" target="_blank" rel="noopener noreferrer" class="c-link">
         @saaims.frames
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -762,7 +749,7 @@ img { display: block; object-fit: cover; }
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── NAV ── */
 const burger    = document.getElementById('burger');
 const mobileNav = document.getElementById('mobileNav');
@@ -808,7 +795,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
     btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
     document.querySelectorAll('.port-section').forEach(s => s.classList.toggle('active', s.dataset.section === btn.dataset.cat));
-    setTimeout(initImageLoading, 50); // check newly visible images
+    setTimeout(initImageLoading, 50);
   });
 });
 
@@ -822,8 +809,8 @@ let imgs = [], cur = 0;
 function build() {
   const p = document.querySelector('.port-section.active');
   imgs = p ? [...p.querySelectorAll('.gc img')].map(i => ({
-    thumb: i.src,                        // webp thumbnail (already loaded)
-    full:  i.dataset.full || i.src,      // full-size original
+    thumb: i.src,
+    full:  i.dataset.full || i.src,
     alt:   i.alt
   })) : [];
 }
@@ -834,7 +821,6 @@ function show() {
   document.getElementById('lbPrev').style.visibility = cur === 0 ? 'hidden' : 'visible';
   document.getElementById('lbNext').style.visibility = cur === imgs.length - 1 ? 'hidden' : 'visible';
 
-  // Show thumb instantly while full-res loads
   lbImg.src = item.thumb;
   lbImg.alt = item.alt;
   lbImg.style.opacity = '1';
@@ -850,10 +836,7 @@ function show() {
       lbSpinner.style.display = 'none';
     }, 80);
   };
-  hi.onerror = () => {
-    // full-size missing — thumbnail stays, spinner hides
-    lbSpinner.style.display = 'none';
-  };
+  hi.onerror = () => { lbSpinner.style.display = 'none'; };
   hi.src = item.full;
 }
 
@@ -888,10 +871,11 @@ document.addEventListener('keydown', e => {
 // Touch swipe
 let tx = 0;
 lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-lb.addEventListener('touchend',   e => {
+lb.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - tx;
-  if (Math.abs(dx) > 50) dx < 0 ? lbNext() : lbPrev();
+  if (Math.abs(dx) > 40) { dx < 0 ? lbNext() : lbPrev(); }
 });
+
 </script>
 </body>
 </html>
