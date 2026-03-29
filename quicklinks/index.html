@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saaim's Frames — Links</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/saaimsframes/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/saaimsframes/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/saaimsframes/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="assets/saaimsframes/apple-touch-icon.png">
+  <link rel="manifest" href="assets/saaimsframes/site.webmanifest">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #0f0f0f;
+      --white: #fafaf8;
+      --mid: #6b6b68;
+      --light: #f5f4f0;
+      --border: rgba(0, 0, 0, 0.09);
+      --accent: #c8b89a;
+    }
+
+    html,
+    body {
+      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ─── SUBTLE GRAIN TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 180px;
+      opacity: 0.5;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem 3rem;
+    }
+
+    /* ─── CARD ─── */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ─── PROFILE ─── */
+    .profile-photo-wrap {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid var(--white);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s forwards;
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.25s forwards;
+    }
+
+    .profile-handle {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.3rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.35s forwards;
+    }
+
+    .profile-bio {
+      font-size: 0.84rem;
+      color: var(--mid);
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 0.75rem;
+      max-width: 30ch;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.42s forwards;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+      margin: 1.75rem auto;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.48s forwards;
+    }
+
+    /* ─── LINKS ─── */
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      text-decoration: none;
+      color: var(--black);
+      transition: background 0.22s, border-color 0.22s, transform 0.18s;
+      opacity: 0;
+      animation: fadeUp 0.55s forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      transform: translateX(-101%);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 0;
+    }
+
+    .link-item:hover::after {
+      transform: translateX(0);
+    }
+
+    .link-item:hover {
+      border-color: var(--black);
+      transform: translateY(-1px);
+    }
+
+    .link-item:hover .link-label,
+    .link-item:hover .link-sub {
+      color: var(--white);
+    }
+
+    .link-item:hover .link-icon-wrap {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .link-item:hover .link-arrow {
+      color: var(--white);
+    }
+
+    .link-item:active {
+      transform: translateY(0);
+    }
+
+    /* staggered delays */
+    .link-item:nth-child(1) {
+      animation-delay: 0.52s;
+    }
+
+    .link-item:nth-child(2) {
+      animation-delay: 0.60s;
+    }
+
+    .link-item:nth-child(3) {
+      animation-delay: 0.68s;
+    }
+
+    .link-item:nth-child(4) {
+      animation-delay: 0.76s;
+    }
+
+    .link-item:nth-child(5) {
+      animation-delay: 0.84s;
+    }
+
+    .link-icon-wrap {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.22s, border-color 0.22s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .link-icon-wrap svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+      transition: color 0.22s;
+    }
+
+    .link-text {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .link-label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: block;
+      transition: color 0.22s;
+    }
+
+    .link-sub {
+      font-size: 0.7rem;
+      color: var(--mid);
+      letter-spacing: 0.04em;
+      display: block;
+      margin-top: 1px;
+      transition: color 0.22s;
+    }
+
+    .link-arrow {
+      font-size: 0.85rem;
+      color: var(--mid);
+      transition: color 0.22s, transform 0.22s;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .link-item:hover .link-arrow {
+      transform: translateX(3px);
+    }
+
+    /* ─── FEATURED LINK (photography portfolio) ─── */
+    .link-item.featured-link {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    .link-item.featured-link::after {
+      background: #1e1e1c;
+    }
+
+    .link-item.featured-link .link-sub {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .link-item.featured-link .link-arrow {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .link-item.featured-link .link-icon-wrap {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .link-item.featured-link:hover .link-label,
+    .link-item.featured-link:hover .link-sub,
+    .link-item.featured-link:hover .link-arrow {
+      color: var(--white);
+    }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.6s 1s forwards;
+    }
+
+    .page-footer img {
+      height: 22px;
+      width: auto;
+      opacity: 0.35;
+      display: block;
+      margin: 0 auto 0.6rem;
+    }
+
+    .page-footer p {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 480px) {
+      .page {
+        padding: 3rem 1.25rem 2.5rem;
+      }
+
+      .card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+    <div class="card">
+
+      <!-- PROFILE -->
+      <div class="profile-photo-wrap">
+        <div class="profile-ring"></div>
+        <img class="profile-photo" src="../assets/main_picture.webp" alt="Saaim">
+      </div>
+
+      <h1 class="profile-name">Saaim</h1>
+      <p class="profile-handle">@saaims.frames</p>
+      <p class="profile-bio">Photographer &amp; visual storyteller — automotive, creative, events &amp; portraits.</p>
+
+      <div class="divider"></div>
+
+      <!-- LINKS -->
+      <div class="links">
+
+        <!-- Instagram -->
+        <a class="link-item" href="https://www.instagram.com/saaims.frames/" target="_blank" rel="noopener">
+          <span class="link-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </span>
+          <span class="link-text">
+            <span class="link-label">Instagram</span>
+            <span class="link-sub">@saaims.frames</span>
+          </span>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <!-- TikTok -->
+        <a class="link-item" href="https://www.tiktok.com/@saaims.frames" target="_blank" rel="noopener">
+          <span class="link-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z" />
+            </svg>
+          </span>
+          <span class="link-text">
+            <span class="link-label">TikTok</span>
+            <span class="link-sub">@saaims.frames</span>
+          </span>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <!-- YouTube -->
+        <a class="link-item" href="https://www.youtube.com/@saaims.frames" target="_blank" rel="noopener">
+          <span class="link-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </span>
+          <span class="link-text">
+            <span class="link-label">YouTube</span>
+            <span class="link-sub">Saaim's Frames</span>
+          </span>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <!-- Website -->
+        <a class="link-item" href="https://saaimsframes.ca/" target="_blank" rel="noopener">
+          <span class="link-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+            </svg>
+          </span>
+          <span class="link-text">
+            <span class="link-label">Website</span>
+            <span class="link-sub">Saaims Frames</span>
+          </span>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <!-- Email -->
+        <a class="link-item" href="mailto:contact@saaimsframes.ca">
+          <span class="link-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+          </span>
+          <span class="link-text">
+            <span class="link-label">Email</span>
+            <span class="link-sub">Get in touch</span>
+          </span>
+          <span class="link-arrow">→</span>
+        </a>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="page-footer">
+        <img src="assets/logo.png" alt="Saaim's Frames">
+        <p>© 2026 Saaim's Frames</p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
