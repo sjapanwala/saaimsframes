@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saaim's Frames</title>
-
+ 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/saaimsframes/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/saaimsframes/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/saaimsframes/favicon-32x32.png">
   <link rel="apple-touch-icon" href="assets/saaimsframes/apple-touch-icon.png">
   <link rel="manifest" href="assets/saaimsframes/site.webmanifest">
-
+ 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+ 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
@@ -430,6 +430,74 @@
     }
     .footer-links a:hover { color: rgba(255,255,255,0.65); }
  
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: var(--black); color: var(--white); overflow: hidden; }
+    #testimonials .section-label { color: rgba(255,255,255,0.32); }
+    #testimonials .section-label::after { background: rgba(255,255,255,0.07); }
+    #testimonials .section-title { color: var(--white); margin-bottom: 3.5rem; }
+ 
+    .testimonials-track-wrap { overflow: hidden; position: relative; }
+    .testimonials-track-wrap::before,
+    .testimonials-track-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+    }
+    .testimonials-track-wrap::before { left: 0; background: linear-gradient(to right, var(--black), transparent); }
+    .testimonials-track-wrap::after  { right: 0; background: linear-gradient(to left,  var(--black), transparent); }
+ 
+    .testimonials-track {
+      display: flex; gap: 1.5rem;
+      width: max-content;
+      animation: scrollTestimonials 38s linear infinite;
+    }
+    .testimonials-track:hover { animation-play-state: paused; }
+ 
+    @keyframes scrollTestimonials {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+ 
+    .testimonial-card {
+      flex-shrink: 0; width: 340px;
+      border: 0.5px solid rgba(255,255,255,0.09);
+      padding: 2.2rem 2rem;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .testimonial-card:hover { border-color: rgba(200,184,154,0.35); }
+ 
+    .testimonial-quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; line-height: 0.6;
+      color: var(--accent); opacity: 0.5;
+      margin-bottom: 1rem; display: block;
+      user-select: none;
+    }
+    .testimonial-text {
+      font-size: 0.9rem; line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1.75rem;
+      font-style: italic;
+    }
+    .testimonial-divider {
+      width: 28px; height: 0.5px;
+      background: var(--accent); opacity: 0.5;
+      margin-bottom: 1.2rem;
+    }
+    .testimonial-name {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 0.2rem;
+    }
+    .testimonial-role {
+      font-size: 0.63rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.28);
+    }
+
+    .form {
+      background-color: var(--white);
+    }
+ 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .nav-links { display: none; }
@@ -442,7 +510,8 @@
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-badge { bottom: -1rem; right: -0.5rem; width: 90px; height: 90px; }
       .about-badge .num { font-size: 1.5rem; }
-      .masonry { columns: 2; }
+      .testimonial-card { width: 290px; padding: 1.8rem 1.5rem; }
+      
       .pricing-intro { grid-template-columns: 1fr; gap: 1.5rem; }
       .pricing-intro p { padding-top: 0; }
       .pricing-grid { grid-template-columns: 1fr; }
@@ -463,16 +532,17 @@
   </style>
 </head>
 <body>
-
+ 
 <!-- ─── NAV ─── -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <img src="assets/sf-logo.png" alt="Saaim's Frames">
+    <img src="assets/sf-logo2.png" alt="Saaim's Frames">
   </a>
   <ul class="nav-links">
     <li><a href="#portfolio">Work</a></li>
     <li><a href="#about">About</a></li>
     <!--<li><a href="#pricing">Pricing</a></li>-->
+    <li><a href="pricing/" class="active">Pricing</a></li>
     <li><a href="quicklinks/">Links</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -480,16 +550,16 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-
+ 
 <!-- ─── MOBILE MENU ─── -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#portfolio" class="mobile-link">Work</a>
   <a href="#about" class="mobile-link">About</a>
-  <!--<a href="#pricing" class="mobile-link">Pricing</a>-->
+  <li><a href="pricing/" class="active">Pricing</a></li>
   <a href="quicklinks/">Links</a>
   <a href="#contact" class="mobile-link">Contact</a>
 </div>
-
+ 
 <!-- ─── HERO ─── -->
 <div class="hero">
   <div class="hero-left">
@@ -509,7 +579,7 @@
     <span class="hero-caption">Saaim's Frames</span>
   </div>
 </div>
-
+ 
 <!-- ─── MARQUEE ─── -->
 <div class="marquee-section">
   <div class="marquee-track">
@@ -527,7 +597,7 @@
     <span class="marquee-item">Fine Art Prints <span class="marquee-dot">✦</span></span>
   </div>
 </div>
-
+ 
 <!-- ─── PORTFOLIO ─── -->
 <section id="portfolio">
   <div class="portfolio-header reveal">
@@ -537,16 +607,17 @@
     </div>
     <div class="filter-tabs">
       <button class="tab active" data-filter="all">All</button>
-      <button class="tab" data-filter="creative">Creative</button>
-      <button class="tab" data-filter="automotive">Automotive</button>
+      <!--<button class="tab" data-filter="creative">Creative</button>-->
       <button class="tab" data-filter="events">Events</button>
       <button class="tab" data-filter="portraits">Portraits</button>
+      <button class="tab" data-filter="brands">Brand Collabs</button>
+      <button class="tab" data-filter="automotive">Automotive</button>
     </div>
   </div>
-
+ 
   <div class="masonry" id="gallery">
-
-    <!-- CREATIVE -->
+ 
+    <!-- CREATIVE 
     <div class="photo-item reveal" data-cat="creative"
          data-full="assets/samples/full-size/creative4.JPG" data-caption="Creative 04">
       <img src="assets/samples/webp/creative4.webp" alt="Creative 4" loading="lazy">
@@ -556,25 +627,10 @@
          data-full="assets/samples/full-size/creative5.JPG" data-caption="Creative 05">
       <img src="assets/samples/webp/creative5.webp" alt="Creative 5" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Creative</span></div>
-    </div>
-
-    <!-- AUTOMOTIVE -->
-    <div class="photo-item reveal" data-cat="automotive"
-         data-full="assets/samples/full-size/automotive1.jpeg" data-caption="Automotive 01">
-      <img src="assets/samples/webp/automotive1.webp" alt="Automotive 1" loading="lazy">
-      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
-    </div>
-    <div class="photo-item reveal" data-cat="automotive"
-         data-full="assets/samples/full-size/automotive3.jpeg" data-caption="Automotive 03">
-      <img src="assets/samples/webp/automotive3.webp" alt="Automotive 3" loading="lazy">
-      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
-    </div>
-    <div class="photo-item reveal" data-cat="automotive"
-         data-full="assets/samples/full-size/automotive4.jpeg" data-caption="Automotive 04">
-      <img src="assets/samples/webp/automotive4.webp" alt="Automotive 4" loading="lazy">
-      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
-    </div>
-
+    </div>-->
+ 
+    
+ 
     <!-- EVENTS -->
     <div class="photo-item reveal" data-cat="events"
          data-full="assets/samples/full-size/event1.jpg" data-caption="Event 01">
@@ -606,7 +662,17 @@
       <img src="assets/samples/webp/event8.webp" alt="Event 8" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Events</span></div>
     </div>
-
+    <div class="photo-item reveal" data-cat="events"
+         data-full="assets/samples/full-size/event9.jpg" data-caption="Event 09">
+      <img src="assets/samples/webp/event9.webp" alt="Event 9" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Events</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="events"
+         data-full="assets/samples/full-size/event10.jpg" data-caption="Event 10">
+      <img src="assets/samples/webp/event10.webp" alt="Event 10" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Events</span></div>
+    </div>
+ 
     <!-- PORTRAITS -->
     <div class="photo-item reveal" data-cat="portraits"
          data-full="assets/samples/full-size/portrait2.png" data-caption="Portrait 02">
@@ -623,11 +689,12 @@
       <img src="assets/samples/webp/portrait4.webp" alt="Portrait 4" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Portrait</span></div>
     </div>
-     <div class="photo-item reveal" data-cat="portraits"
-         data-full="assets/samples/full-size/portrait6." data-caption="Portrait 06">
-      <img src="assets/samples/webp/portrait6.webp" alt="Portrait 6" loading="lazy">
+    <div class="photo-item reveal" data-cat="portraits"
+         data-full="assets/samples/full-size/portrait5.jpg" data-caption="Portrait 05">
+      <img src="assets/samples/webp/portrait5.webp" alt="Portrait 5" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Portrait</span></div>
-    </div>
+  </div>
+
     <div class="photo-item reveal" data-cat="portraits"
          data-full="assets/samples/full-size/portrait7.jpg" data-caption="Portrait 07">
       <img src="assets/samples/webp/portrait7.webp" alt="Portrait 7" loading="lazy">
@@ -639,9 +706,43 @@
       <div class="photo-overlay"><span class="photo-meta">Portrait</span></div>
     </div>
 
+    <!--Brand Collabs-->
+    <div class="photo-item reveal" data-cat="brands"
+         data-full="assets/samples/full-size/brand1.jpg" data-caption="Brand 1">
+      <img src="assets/samples/webp/brand1.webp" alt="Brand 1" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Brand Collab</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="brands"
+         data-full="assets/samples/full-size/brand2.jpg" data-caption="Brand 2">
+      <img src="assets/samples/webp/brand2.webp" alt="Brand 2" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Brand Collab</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="brands"
+         data-full="assets/samples/full-size/brand3.jpg" data-caption="Brand 3">
+      <img src="assets/samples/webp/brand3.webp" alt="Brand 3" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Brand Collab</span></div>
+    </div>
+
+    <!-- AUTOMOTIVE -->
+    <div class="photo-item reveal" data-cat="automotive"
+         data-full="assets/samples/full-size/automotive1.jpeg" data-caption="Automotive 01">
+      <img src="assets/samples/webp/automotive1.webp" alt="Automotive 1" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="automotive"
+         data-full="assets/samples/full-size/automotive3.jpeg" data-caption="Automotive 03">
+      <img src="assets/samples/webp/automotive3.webp" alt="Automotive 3" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="automotive"
+         data-full="assets/samples/full-size/automotive4.jpeg" data-caption="Automotive 04">
+      <img src="assets/samples/webp/automotive4.webp" alt="Automotive 4" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
+    </div>
+ 
   </div><!-- /masonry -->
 </section>
-
+ 
 <!-- ─── LIGHTBOX ─── -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">&#x2715;</button>
@@ -653,7 +754,76 @@
   <span class="lightbox-caption" id="lightboxCaption"></span>
   <span class="lightbox-counter" id="lightboxCounter"></span>
 </div>
-
+ 
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="reveal">
+    <p class="section-label">Kind words</p>
+    <h2 class="section-title">What <em>clients</em><br>are saying.</h2>
+  </div>
+ 
+  <div class="testimonials-track-wrap reveal">
+    <div class="testimonials-track" id="testimonialsTrack">
+ 
+      <!-- Card 1 -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"We’d absolutely recommend Saaim to anyone looking for someone who delivers high quality work, but also understands and captures the deeper purpose behind the moments."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">Islamic Relef UAlberta</p>
+        <p class="testimonial-role">Events Client · Edmonton</p>
+      </div>
+ 
+      <!-- Card 2 -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"...I was attending the Faith & Fitrah event and you made me look like I was mogging everyone — but in reality, you made everyone look amazing and photogenic. Thank you bro, love you Saaim. I want you at future events to help us hold and cherish our memories through beautiful pictures."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">@ashrafi_305</p>
+        <p class="testimonial-role">Event Photography</p>
+      </div>
+ 
+      <!-- Card 3 -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"I had an amazing experience working with Saaim. He took incredible photos for me and my friend and truly brought our vision to life. He was professional, creative, and made the entire shoot feel effortless. He listened to what we wanted and captured it better than we imagined. The final photos were high quality and exactly what we needed for our Instagram!"</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">Anonymous Client</p>
+        <p class="testimonial-role">Portrait Photography</p>
+      </div>
+ 
+ 
+      <!-- Duplicate set for seamless loop -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"We’d absolutely recommend Saaim to anyone looking for someone who delivers high quality work, but also understands and captures the deeper purpose behind the moments."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">Islamic Relef UAlberta</p>
+        <p class="testimonial-role">Events Client · Edmonton</p>
+      </div>
+ 
+      <!-- Card 2 -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"...I was attending the Faith & Fitrah event and you made me look like I was mogging everyone — but in reality, you made everyone look amazing and photogenic. Thank you bro, love you Saaim. I want you at future events to help us hold and cherish our memories through beautiful pictures."</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">@ashrafi_305</p>
+        <p class="testimonial-role">Event Photography</p>
+      </div>
+ 
+      <!-- Card 3 -->
+      <div class="testimonial-card">
+        <span class="testimonial-quote-mark">"</span>
+        <p class="testimonial-text">"I had an amazing experience working with Saaim. He took incredible photos for me and my friend and truly brought our vision to life. He was professional, creative, and made the entire shoot feel effortless. He listened to what we wanted and captured it better than we imagined. The final photos were high quality and exactly what we needed for our Instagram!"</p>
+        <div class="testimonial-divider"></div>
+        <p class="testimonial-name">Anonymous Client</p>
+        <p class="testimonial-role">Portrait Photography</p>
+      </div>
+ 
+    </div><!-- /track -->
+  </div><!-- /wrap -->
+</section>
+ 
 <!-- ─── ABOUT ─── -->
 <section id="about">
   <p class="section-label reveal">The photographer</p>
@@ -673,61 +843,8 @@
     </div>
   </div>
 </section>
-
-<!-- ─── PRICING ─── -->
-<!--<section id="pricing">
-  <div class="pricing-intro reveal">
-    <div>
-      <p class="section-label">Investment</p>
-      <h2 class="section-title">Simple,<br><em>honest</em> pricing.</h2>
-    </div>
-    <p>All packages include edited high-resolution files, a private online gallery, and a complimentary pre-shoot consultation. Custom projects and collaborations are always welcome — reach out to discuss.</p>
-  </div>
-  <div class="pricing-grid reveal">
-    <div class="pricing-card">
-      <p class="pricing-tier">Essential</p>
-      <p class="pricing-price">$250</p>
-      <p class="pricing-per">1–2 hour session</p>
-      <ul class="pricing-features">
-        <li>On-location shoot</li>
-        <li>20 edited images</li>
-        <li>Private online gallery</li>
-        <li>Print-ready files</li>
-        <li>1-week delivery</li>
-      </ul>
-      <a href="#contact" class="btn">Enquire</a>
-    </div>
-    <div class="pricing-card featured">
-      <span class="popular-badge">Most popular</span>
-      <p class="pricing-tier">Standard</p>
-      <p class="pricing-price" style="color:#fafaf8;">$600</p>
-      <p class="pricing-per">Half-day</p>
-      <ul class="pricing-features">
-        <li>4-hour session</li>
-        <li>60 edited images</li>
-        <li>Private online gallery</li>
-        <li>Print-ready + web files</li>
-        <li>3-day delivery</li>
-      </ul>
-      <a href="#contact" class="btn-dark">Enquire</a>
-    </div>
-    <div class="pricing-card">
-      <p class="pricing-tier">Premium</p>
-      <p class="pricing-price">$1,200</p>
-      <p class="pricing-per">Full-day</p>
-      <ul class="pricing-features">
-        <li>8-hour full coverage</li>
-        <li>120+ edited images</li>
-        <li>Private online gallery</li>
-        <li>All file formats</li>
-        <li>Rush delivery available</li>
-      </ul>
-      <a href="#contact" class="btn">Enquire</a>
-    </div>
-    </div>
-  </div>
-</section>-->
-
+ 
+ 
 <section id="contact">
   <div class="contact-info reveal">
     <div>
@@ -737,11 +854,11 @@
     <div class="contact-details">
       <div class="contact-detail">
         <p class="contact-detail-label">Email</p>
-        <p class="contact-detail-val">contact@saaimsframes.ca</p>
+        <a href="mailto:contact@saaimsframes.ca" style="text-decoration: none; color: inherit;">contact@saaimsframes.ca</a>
       </div>
       <div class="contact-detail">
         <p class="contact-detail-label">Instagram</p>
-        <p class="contact-detail-val">@saaims.frames</p>
+        <a href="https://instagram.com/saaims.frames" style="text-decoration: none; color: inherit;">@saaims.frames</a>
       </div>
       <div class="contact-detail">
         <p class="contact-detail-label">Available for</p>
@@ -749,40 +866,41 @@
       </div>
     </div>
   </div>
- 
-  <div class="reveal">
-    <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLSe0VK58sFvb2P6YXFr84rmu678UFh85FKNxrMVRtup-BXUX9g/viewform?embedded=true"
-      width="100%"
-      height="720"
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0"
-      style="border:none; background:transparent; display:block; color-scheme: normal;"
-    >Loading…</iframe>
+  <div class="form">
+    <div class="reveal">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSe0VK58sFvb2P6YXFr84rmu678UFh85FKNxrMVRtup-BXUX9g/viewform?embedded=true"
+        width="100%"
+        height="720"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        style="border:none; background:transparent; display:block; color-scheme: normal;"
+      >Loading…</iframe>
+    </div>
   </div>
 </section>
-
+ 
 <!-- ─── FOOTER ─── -->
 <footer>
   <span class="footer-logo">
-    <img src="assets/sf-logo.png" alt="Saaim's Frames">
+    <img src="assets/sf-logo2.png" alt="Saaim's Frames">
   </span>
   <span>© 2026 Saaim's Frames — All rights reserved</span>
   <div class="footer-links">
     <a href="https://www.instagram.com/saaims.frames/">Instagram</a>
-    <a href="mailto:contact@saaimsframes.ca">Email</a>
+    <a href="/cdn-cgi/l/email-protection#7d1e1213091c1e093d0e1c1c14100e1b0f1c10180e531e1c">Email</a>
   </div>
 </footer>
-
+ 
 <!-- ─── JS ─── -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Navbar shrink
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   });
-
+ 
   // Hamburger
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -798,7 +916,7 @@
       document.body.style.overflow = '';
     });
   });
-
+ 
   // Scroll reveal
   const revealObs = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -809,7 +927,7 @@
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
+ 
   // Portfolio filter
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', function () {
@@ -821,20 +939,20 @@
       });
     });
   });
-
+ 
   // Lightbox
   const lightbox     = document.getElementById('lightbox');
   const lightboxImg  = document.getElementById('lightboxImg');
   const lightboxCap  = document.getElementById('lightboxCaption');
   const lightboxCtr  = document.getElementById('lightboxCounter');
-
+ 
   let currentIndex = 0;
   let visibleItems = [];
-
+ 
   function getVisible() {
     return [...document.querySelectorAll('.photo-item:not(.hidden)')];
   }
-
+ 
   function openLightbox(index) {
     visibleItems = getVisible();
     currentIndex = index;
@@ -842,7 +960,7 @@
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   function showSlide(index) {
     const item = visibleItems[index];
     lightboxImg.src = '';
@@ -850,13 +968,13 @@
     lightboxCap.textContent = item.dataset.caption || '';
     lightboxCtr.textContent = (index + 1) + ' / ' + visibleItems.length;
   }
-
+ 
   function closeLightbox() {
     lightbox.classList.remove('open');
     lightboxImg.src = '';
     document.body.style.overflow = '';
   }
-
+ 
   document.querySelectorAll('.photo-item').forEach((item, i) => {
     item.addEventListener('click', () => {
       visibleItems = getVisible();
@@ -864,7 +982,7 @@
       openLightbox(idx >= 0 ? idx : 0);
     });
   });
-
+ 
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   document.getElementById('lightboxPrev').addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
@@ -874,24 +992,18 @@
     currentIndex = (currentIndex + 1) % visibleItems.length;
     showSlide(currentIndex);
   });
-
+ 
   lightbox.addEventListener('click', e => {
     if (e.target === lightbox) closeLightbox();
   });
-
+ 
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('open')) return;
     if (e.key === 'Escape')      closeLightbox();
     if (e.key === 'ArrowLeft')  { currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length; showSlide(currentIndex); }
     if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visibleItems.length; showSlide(currentIndex); }
   });
-
-  // Contact form
-  document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    this.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
-  });
+ 
 </script>
 </body>
 </html>

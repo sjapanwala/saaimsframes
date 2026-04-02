@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Saaim's Frames</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/saaimsframes/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/saaimsframes/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/saaimsframes/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="../assets/saaimsframes/apple-touch-icon.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0f0f0f;
+      --white: #fafaf8;
+      --mid:   #6b6b68;
+      --light: #f5f4f0;
+      --border: rgba(0,0,0,0.1);
+      --accent: #c8b89a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(250,250,248,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 0.5px solid var(--border);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 0.9rem 3rem; }
+
+    .nav-logo img {
+      height: 40px; width: auto; display: block; transition: height 0.3s;
+    }
+    nav.scrolled .nav-logo img { height: 32px; }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.76rem; font-weight: 400;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--black); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--black); transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: var(--white); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 400;
+      color: var(--black); text-decoration: none; transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--mid); }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 10rem 3rem 5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .page-hero-eyebrow {
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .page-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 1.05; font-weight: 400;
+      opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+    }
+    .page-hero-title em { font-style: italic; color: var(--mid); }
+    .page-hero-note {
+      max-width: 38ch;
+      font-size: 0.9rem; color: var(--mid); line-height: 1.85;
+      opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+      align-self: flex-end;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.64rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 0.7rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: ''; flex: 1; max-width: 60px;
+      height: 0.5px; background: var(--border);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400; line-height: 1.1;
+    }
+    .section-title em { font-style: italic; color: var(--mid); }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid var(--black);
+      background: transparent; color: var(--black);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.22s, color 0.22s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    .btn-dark {
+      display: inline-flex; align-items: center;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: transparent; color: var(--white);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.22s, border-color 0.22s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-dark:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
+
+    /* ─── PRICING GRID ─── */
+    #packages { background: var(--white); }
+
+    .pricing-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start; margin-bottom: 4rem;
+    }
+    .pricing-intro p {
+      font-size: 0.92rem; color: var(--mid);
+      line-height: 1.85; padding-top: 2.75rem;
+    }
+
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border: 1px solid var(--border);
+    }
+    .pricing-card {
+      padding: 2.5rem; border-right: 0.5px solid var(--border);
+      position: relative;
+    }
+    .pricing-card:last-child { border-right: none; }
+    .pricing-card.featured { background: var(--black); color: var(--white); }
+
+    .pricing-tier {
+      font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 1.5rem; color: var(--mid);
+    }
+    .pricing-card.featured .pricing-tier { color: rgba(255,255,255,0.4); }
+
+    .pricing-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 400; line-height: 1; margin-bottom: 0.2rem;
+    }
+    .pricing-per { font-size: 0.78rem; color: var(--mid); margin-bottom: 2rem; }
+    .pricing-card.featured .pricing-per { color: rgba(255,255,255,0.4); }
+
+    .pricing-features { list-style: none; margin-bottom: 2.5rem; }
+    .pricing-features li {
+      font-size: 0.83rem; padding: 0.6rem 0;
+      border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem; color: var(--mid);
+    }
+    .pricing-card.featured .pricing-features li {
+      border-color: rgba(255,255,255,0.09); color: rgba(255,255,255,0.6);
+    }
+    .pricing-features li::before {
+      content: ''; width: 4px; height: 4px;
+      border-radius: 50%; background: var(--accent); flex-shrink: 0;
+    }
+    .popular-badge {
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: var(--black);
+      font-size: 0.57rem; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.28rem 0.9rem; font-weight: 500; white-space: nowrap;
+    }
+
+    /* ─── ADD-ONS ─── */
+    #addons { background: var(--light); }
+
+    .addons-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: start; margin-bottom: 4rem;
+    }
+    .addons-intro p {
+      font-size: 0.92rem; color: var(--mid);
+      line-height: 1.85; padding-top: 2.75rem;
+    }
+
+    .addons-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 0.5px solid var(--border);
+    }
+    .addon-item {
+      padding: 1.8rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+      border-right: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+      transition: background 0.2s;
+    }
+    .addon-item:hover { background: rgba(200,184,154,0.06); }
+    .addon-item:nth-child(even) { border-right: none; }
+    .addon-item:nth-last-child(-n+2) { border-bottom: none; }
+    .addon-name {
+      font-size: 0.85rem; font-weight: 500; color: var(--black);
+      margin-bottom: 0.3rem;
+    }
+    .addon-desc {
+      font-size: 0.75rem; color: var(--mid); line-height: 1.6;
+    }
+    .addon-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 400;
+      color: var(--black); white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ─── FAQ ─── */
+    #faq { background: var(--white); }
+
+    .faq-layout {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 5rem; align-items: start; margin-top: 3rem;
+    }
+    .faq-sidebar p {
+      font-size: 0.88rem; color: var(--mid); line-height: 1.85; margin-top: 1.2rem;
+    }
+
+    .faq-list { border-top: 0.5px solid var(--border); }
+    .faq-item {
+      border-bottom: 0.5px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.5rem 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 500; color: var(--black);
+      text-align: left; transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--mid); }
+    .faq-icon {
+      flex-shrink: 0; width: 18px; height: 18px;
+      border: 0.5px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; color: var(--mid);
+      transition: transform 0.3s, background 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--black); color: var(--white); border-color: var(--black); }
+    .faq-answer {
+      font-size: 0.87rem; color: var(--mid); line-height: 1.85;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 1.5rem;
+    }
+
+    /* ─── CTA STRIP ─── */
+    .cta-strip {
+      background: var(--black); color: var(--white);
+      padding: 5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .cta-strip-text { }
+    .cta-strip-eyebrow {
+      font-size: 0.64rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: rgba(255,255,255,0.32); margin-bottom: 0.8rem;
+    }
+    .cta-strip-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400; line-height: 1.15; color: var(--white);
+    }
+    .cta-strip-title em { font-style: italic; color: rgba(200,184,154,0.8); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 1.75rem 3rem;
+      border-top: 0.5px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      background: var(--black);
+      color: rgba(255,255,255,0.28);
+      font-size: 0.68rem; letter-spacing: 0.06em;
+    }
+    .footer-logo img { height: 28px; width: auto; opacity: 0.55; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      color: rgba(255,255,255,0.28); text-decoration: none;
+      font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.65); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 1.2rem 1.5rem; }
+      nav.scrolled { padding: 0.85rem 1.5rem; }
+      .page-hero { padding: 8rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .pricing-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .pricing-intro p { padding-top: 0; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .pricing-card.featured { border-bottom: 0.5px solid rgba(255,255,255,0.1); }
+      .addons-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .addons-intro p { padding-top: 0; }
+      .addons-grid { grid-template-columns: 1fr; }
+      .addon-item { border-right: none !important; }
+      .addon-item:nth-last-child(-n+2) { border-bottom: 0.5px solid var(--border); }
+      .addon-item:last-child { border-bottom: none; }
+      .faq-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .cta-strip { flex-direction: column; align-items: flex-start; padding: 4rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 500px) {
+      .page-hero-title { font-size: 2.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a href="../" class="nav-logo">
+    <img src="../assets/sf-logo2.png" alt="Saaim's Frames">
+  </a>
+  <ul class="nav-links">
+    <li><a href="../#portfolio">Work</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../pricing/" class="active">Pricing</a></li>
+    <li><a href="../quicklinks/">Links</a></li>
+    <li><a href="../#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── MOBILE MENU ─── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../#portfolio" class="mobile-link">Work</a>
+  <a href="../#about" class="mobile-link">About</a>
+  <a href="../pricing/" class="mobile-link">Pricing</a>
+  <a href="../quicklinks/" class="mobile-link">Links</a>
+  <a href="../l#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- ─── PAGE HERO ─── -->
+<div class="page-hero">
+  <div>
+    <p class="page-hero-eyebrow">Investment</p>
+    <h1 class="page-hero-title">Simple,<br><em>honest</em> pricing.</h1>
+  </div>
+  <p class="page-hero-note">Every package includes edited high-resolution files, a private online gallery, and a complimentary pre-shoot consultation. Custom projects and collaborations are always welcome.</p>
+</div>
+
+<!-- ─── PACKAGES ─── -->
+<section id="packages">
+  <div class="pricing-intro reveal">
+    <div>
+      <p class="section-label">Packages</p>
+      <h2 class="section-title">Pick your<br><em>package.</em></h2>
+    </div>
+    <p>All sessions are shot on location across Edmonton and surrounding areas. Not sure which package fits? Reach out and we'll figure it out together.</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <p class="pricing-tier">Essential</p>
+      <p class="pricing-price">$250</p>
+      <p class="pricing-per">1–2 hour session</p>
+      <ul class="pricing-features">
+        <li>On-location shoot</li>
+        <li>20 edited images</li>
+        <li>Private online gallery</li>
+        <li>Print-ready files</li>
+        <li>1-week delivery</li>
+      </ul>
+      <a href="mailto:contact@saaimsframes.ca" class="btn">Enquire</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <span class="popular-badge">Get The Most</span>
+      <p class="pricing-tier">Standard</p>
+      <p class="pricing-price" style="color:#fafaf8;">$600</p>
+      <p class="pricing-per">Half-day</p>
+      <ul class="pricing-features">
+        <li>4-hour session</li>
+        <li>60 edited images</li>
+        <li>Private online gallery</li>
+        <li>Print-ready + web files</li>
+        <li>3-day delivery</li>
+      </ul>
+      <a href="mailto:contact@saaimsframes.ca" class="btn-dark">Enquire</a>
+    </div>
+
+    <div class="pricing-card">
+      <p class="pricing-tier">Curated</p>
+      <p class="pricing-price">Curated for Client</p>
+      <p class="pricing-per">As Per Requirement</p>
+      <ul class="pricing-features">
+        <li>Custom Timings</li>
+        <li>Custom Edited Images</li>
+        <li>Private online gallery</li>
+        <li>Custom Delivery Time</li>
+      </ul>
+      <a href="mailto:contact@saaimsframes.ca" class="btn">Enquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ADD-ONS ─── -->
+<section id="addons">
+  <div class="addons-intro reveal">
+    <div>
+      <p class="section-label">Add-ons</p>
+      <h2 class="section-title">Extend your<br><em>session.</em></h2>
+    </div>
+    <p>Bolt any of these onto your package. Mix and match as needed — just mention them when you enquire and I'll include them in your quote.</p>
+  </div>
+
+  <div class="addons-grid reveal">
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Extra Edited Images</p>
+        <p class="addon-desc">Additional retouched files beyond your package limit.</p>
+      </div>
+      <p class="addon-price">$8 <span style="font-family:'DM Sans';font-size:0.7rem;color:var(--mid)">/ image</span></p>
+    </div>
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Rush Delivery</p>
+        <p class="addon-desc">Turnaround within 24–48 hours of the session.</p>
+      </div>
+      <p class="addon-price">$75</p>
+    </div>
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Extended Session Time</p>
+        <p class="addon-desc">Add an extra hour to any package on the day.</p>
+      </div>
+      <p class="addon-price">$90 <span style="font-family:'DM Sans';font-size:0.7rem;color:var(--mid)">/ hr</span></p>
+    </div>
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Short-Form Video Reel</p>
+        <p class="addon-desc">60–90 second edited highlight reel for social media.</p>
+      </div>
+      <p class="addon-price">$150</p>
+    </div>
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Second Location</p>
+        <p class="addon-desc">Add a second shooting location to your session.</p>
+      </div>
+      <p class="addon-price">$50</p>
+    </div>
+    <div class="addon-item">
+      <div>
+        <p class="addon-name">Print Licence</p>
+        <p class="addon-desc">Commercial print rights for advertising or large-format use.</p>
+      </div>
+      <p class="addon-price">POA</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <p class="section-label reveal">Before you book</p>
+  <div class="faq-layout">
+    <div class="faq-sidebar reveal">
+      <h2 class="section-title">Common<br><em>questions.</em></h2>
+      <p>Still have something on your mind? Reach out directly — I'm happy to talk through anything before you commit.</p>
+    </div>
+
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Do you shoot outside of Edmonton?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">Yes — I'm available throughout Alberta and can travel further for the right project. Travel costs may apply for locations more than 25km from Central Edmonton. Just ask.</p>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          How do I receive my photos?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">All edited images are delivered via a Google Drive. You'll get a link to download full-resolution files at your convenience. The gallery stays active for 60 days, and then gets Deleted</p>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Can I get the raw files?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">Raw files are not included in any standard package and are generally not available for licensing. The edited, delivered files are the final product — they represent the full creative work.</p>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What's the booking process?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">Send an enquiry through the contact form or email. We'll confirm the details, I'll send over a contract, and a deposit secures your date. Simple as that.</p>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Do you offer custom or commercial packages?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">Absolutely. Brands, businesses, and larger productions are welcome to reach out for a custom quote. Rates vary based on usage, scope, and deliverables.</p>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          What's your cancellation policy?
+          <span class="faq-icon">+</span>
+        </button>
+        <p class="faq-answer">Cancellations made more than 72 hours before the session are refunded in full minus a small admin fee. Cancellations within 72 hours forfeit the deposit. Rescheduling is always welcome with enough notice.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA STRIP ─── -->
+<div class="cta-strip reveal">
+  <div class="cta-strip-text">
+    <p class="cta-strip-eyebrow">Ready to book</p>
+    <h2 class="cta-strip-title">Let's make<br><em>something</em> real.</h2>
+  </div>
+  <a href="../#contact" class="btn-dark">Get in touch</a>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <span class="footer-logo">
+    <img src="../assets/sf-logo2.png" alt="Saaim's Frames">
+  </span>
+  <span>© 2026 Saaim's Frames — All rights reserved</span>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/saaims.frames/">Instagram</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ─── JS ─── -->
+<script>
+  // Navbar shrink
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(l => {
+    l.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
