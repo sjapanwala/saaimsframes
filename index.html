@@ -254,6 +254,86 @@
     .photo-item:hover .photo-meta { opacity: 1; transform: translateY(0); }
     .photo-item.hidden { display: none; }
  
+    /* ─── HIGHLIGHTS CAROUSEL ─── */
+    #highlights-carousel {
+      display: none;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    #highlights-carousel.active { display: block; }
+
+    .carousel-stage {
+      position: relative;
+      overflow: hidden;
+      background: var(--light);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .carousel-slide {
+      flex: 0 0 100%;
+      position: relative;
+    }
+    .carousel-slide img {
+      width: 100%;
+      max-height: 72vh;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(8%);
+    }
+    .carousel-caption {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.75rem;
+      bottom: auto;
+      left: auto;
+      padding: 0;
+      background: none;
+      text-align: right;
+      color: rgba(255,255,255,0.88);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.55);
+    }
+    .carousel-caption small {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.42);
+      margin-top: 0.35rem;
+    }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(15,15,15,0.45); border: none; color: rgba(255,255,255,0.75);
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer; z-index: 5;
+      transition: background 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(15,15,15,0.8); color: white; }
+    .carousel-prev { left: 1.2rem; }
+    .carousel-next { right: 1.2rem; }
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 0.5rem;
+      padding: 1rem 0 0;
+    }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s; padding: 0;
+    }
+    .carousel-dot.active { background: var(--black); transform: scale(1.3); }
+
+    /* hide masonry when highlights tab is active */
+    #gallery.highlights-mode { display: none; }
+
     /* ─── LIGHTBOX ─── */
     .lightbox {
       display: none; position: fixed; inset: 0;
@@ -542,7 +622,7 @@
     <li><a href="#portfolio">Work</a></li>
     <li><a href="#about">About</a></li>
     <!--<li><a href="#pricing">Pricing</a></li>-->
-    <li><a href="pricing/" class="active">Pricing</a></li>
+    <!--<li><a href="pricing/" class="active">Pricing</a></li>-->
     <li><a href="quicklinks/">Links</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -555,7 +635,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#portfolio" class="mobile-link">Work</a>
   <a href="#about" class="mobile-link">About</a>
-  <li><a href="pricing/" class="active">Pricing</a></li>
+  <!--<li><a href="pricing/" class="active">Pricing</a></li>-->
   <a href="quicklinks/">Links</a>
   <a href="#contact" class="mobile-link">Contact</a>
 </div>
@@ -606,16 +686,55 @@
       <h2 class="section-title">The <em>Portfolio</em></h2>
     </div>
     <div class="filter-tabs">
-      <button class="tab active" data-filter="all">All</button>
-      <!--<button class="tab" data-filter="creative">Creative</button>-->
-      <button class="tab" data-filter="events">Events</button>
+      <button class="tab active" data-filter="highlights">Highlights</button>
+      <button class="tab" data-filter="automotive">Automotive</button>
       <button class="tab" data-filter="portraits">Portraits</button>
       <button class="tab" data-filter="brands">Brand Collabs</button>
-      <button class="tab" data-filter="automotive">Automotive</button>
+      <button class="tab" data-filter="events">Events</button>
     </div>
   </div>
  
-  <div class="masonry" id="gallery">
+  <!-- ─── HIGHLIGHTS CAROUSEL ─── -->
+  <!-- To customise: edit src/data-full/data-caption for each slide. Add or remove .carousel-slide divs (keep between 3–6). -->
+  <div id="highlights-carousel" class="active">
+    <div class="carousel-stage">
+      <div class="carousel-track" id="carouselTrack">
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <img src="assets/samples/webp/automotive1.webp" data-full="assets/samples/full-size/automotive1.jpeg" alt="Highlight 3" loading="lazy">
+          <div class="carousel-caption">
+            Steel &amp; golden light.
+            <small>Automotive · Edmonton</small>
+          </div>
+        </div>
+
+                <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <img src="assets/samples/webp/event8.webp" data-full="assets/samples/full-size/event1.jpg" alt="Highlight 8" loading="lazy">
+          <div class="carousel-caption">
+            Energy in every frame.
+            <small>Events · Edmonton</small>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="carousel-slide">
+          <img src="assets/samples/webp/brand3.webp" data-full="assets/samples/full-size/brand3.jpg" alt="Highlight 3" loading="lazy">
+          <div class="carousel-caption">
+            Where story meets brand.
+            <small>Brand Collab · Edmonton</small>
+          </div>
+        </div>
+
+      </div><!-- /track -->
+      <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous">&#8592;</button>
+      <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+
+  <div class="masonry highlights-mode" id="gallery">
  
     <!-- CREATIVE 
     <div class="photo-item reveal" data-cat="creative"
@@ -730,6 +849,11 @@
       <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
     </div>
     <div class="photo-item reveal" data-cat="automotive"
+         data-full="assets/samples/full-size/automotive2.jpeg" data-caption="Automotive 02">
+      <img src="assets/samples/webp/automotive2.webp" alt="Automotive 2" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="automotive"
          data-full="assets/samples/full-size/automotive3.jpeg" data-caption="Automotive 03">
       <img src="assets/samples/webp/automotive3.webp" alt="Automotive 3" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
@@ -737,6 +861,11 @@
     <div class="photo-item reveal" data-cat="automotive"
          data-full="assets/samples/full-size/automotive4.jpeg" data-caption="Automotive 04">
       <img src="assets/samples/webp/automotive4.webp" alt="Automotive 4" loading="lazy">
+      <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
+    </div>
+    <div class="photo-item reveal" data-cat="automotive"
+         data-full="assets/samples/full-size/automotive5.jpeg" data-caption="Automotive 05">
+      <img src="assets/samples/webp/automotive5.webp" alt="Automotive 5" loading="lazy">
       <div class="photo-overlay"><span class="photo-meta">Automotive</span></div>
     </div>
  
@@ -889,12 +1018,12 @@
   <span>© 2026 Saaim's Frames — All rights reserved</span>
   <div class="footer-links">
     <a href="https://www.instagram.com/saaims.frames/">Instagram</a>
-    <a href="/cdn-cgi/l/email-protection#7d1e1213091c1e093d0e1c1c14100e1b0f1c10180e531e1c">Email</a>
+    <a href="mailto:contact@saaimsframes.ca" style="text-decoration: none; color: inherit;">Email</a>
   </div>
 </footer>
  
 <!-- ─── JS ─── -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Navbar shrink
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -928,15 +1057,26 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
  
-  // Portfolio filter
+  // Portfolio filter (highlights tab shows carousel, others show masonry)
+  const gallery       = document.getElementById('gallery');
+  const hlCarousel    = document.getElementById('highlights-carousel');
+
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', function () {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
       const filter = this.dataset.filter;
-      document.querySelectorAll('.photo-item').forEach(item => {
-        item.classList.toggle('hidden', filter !== 'all' && item.dataset.cat !== filter);
-      });
+
+      if (filter === 'highlights') {
+        hlCarousel.classList.add('active');
+        gallery.classList.add('highlights-mode');
+      } else {
+        hlCarousel.classList.remove('active');
+        gallery.classList.remove('highlights-mode');
+        document.querySelectorAll('.photo-item').forEach(item => {
+          item.classList.toggle('hidden', item.dataset.cat !== filter);
+        });
+      }
     });
   });
  
@@ -1003,7 +1143,53 @@
     if (e.key === 'ArrowLeft')  { currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length; showSlide(currentIndex); }
     if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visibleItems.length; showSlide(currentIndex); }
   });
- 
+
+  // ─── HIGHLIGHTS CAROUSEL JS ───
+  (function () {
+    const track  = document.getElementById('carouselTrack');
+    const dotsEl = document.getElementById('carouselDots');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.carousel-slide');
+    let current  = 0;
+    let autoTimer;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(idx) {
+      current = (idx + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    document.getElementById('carouselNext').addEventListener('click', () => { next(); resetAuto(); });
+    document.getElementById('carouselPrev').addEventListener('click', () => { prev(); resetAuto(); });
+
+    function startAuto() { autoTimer = setInterval(next, 5000); }
+    function resetAuto()  { clearInterval(autoTimer); startAuto(); }
+    startAuto();
+
+    // Swipe support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); resetAuto(); }
+    });
+  })();
+
 </script>
 </body>
 </html>
